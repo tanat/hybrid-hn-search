@@ -1,0 +1,35 @@
+[
+  "postgres performance tuning",
+  "rust memory safety",
+  "kubernetes deployment scaling",
+  "llm inference optimization",
+  "open source business model",
+  "typescript type system tricks",
+  "database index design",
+  "react server components",
+
+  "why do startups fail at scale",
+  "how does garbage collection work",
+  "why is software estimation so hard",
+  "when should you use microservices",
+  "why do programmers prefer Linux",
+  "how do you handle distributed transactions",
+  "why is hiring senior engineers difficult",
+  "what makes a good code review",
+
+  "technical debt as career risk",
+  "the cost of software abstractions",
+  "engineering culture and productivity",
+  "complexity as the root of all software problems",
+  "open source sustainability",
+  "AI replacing software developers",
+  "remote work and software teams",
+  "rewriting versus refactoring legacy systems",
+
+  "what is V8 hidden classes",
+  "how does consistent hashing work",
+  "what is the CAP theorem",
+  "how does Raft consensus work",
+  "what is copy-on-write in Linux",
+  "how does TLS handshake work"
+]
