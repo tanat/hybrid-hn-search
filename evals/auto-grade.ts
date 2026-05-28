@@ -49,14 +49,8 @@ async function main() {
   }
 
   const provider = getProvider();
-  const keyVar = provider === 'gemini' ? 'GEMINI_API_KEY' : 'AI_GATEWAY_API_KEY';
-  if (provider === 'gemini') {
-    if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-      console.error(`GEMINI_API_KEY (or GOOGLE_GENERATIVE_AI_API_KEY) is not set in .env.local`);
-      process.exit(1);
-    }
-  } else if (!process.env.AI_GATEWAY_API_KEY) {
-    console.error(`${keyVar} is not set in .env.local`);
+  if (!process.env.AI_GATEWAY_API_KEY) {
+    console.error(`AI_GATEWAY_API_KEY is not set in .env.local`);
     process.exit(1);
   }
   console.log(`Auto-grader: provider=${provider}`);

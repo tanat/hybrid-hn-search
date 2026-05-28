@@ -1,4 +1,3 @@
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { gateway, generateText, Output, type LanguageModel } from 'ai';
 import { z } from 'zod';
 
@@ -21,10 +20,7 @@ When in doubt between adjacent grades, lean lower.
 Grade relevance to the query, not writing quality.`;
 
 function getModel(provider: GraderProvider): LanguageModel {
-  if (provider === 'gemini') {
-    const google = createGoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
-    return google('gemini-2.5-flash') as unknown as LanguageModel;
-  }
+  if (provider === 'gemini') return gateway('google/gemini-2.5-flash');
   if (provider === 'openai') return gateway('openai/gpt-4o-mini');
   return gateway('anthropic/claude-haiku-4-5-20251001');
 }
