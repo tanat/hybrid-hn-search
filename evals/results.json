@@ -1,0 +1,128 @@
+[
+  {
+    "runId": "2026-05-29T06:08:41.850Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 900
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.003,
+        "recall5": 0.003,
+        "mrr": 0.033,
+        "p50LatencyMs": 2,
+        "p95LatencyMs": 4
+      },
+      "dense": {
+        "ndcg10": 0.504,
+        "recall5": 0.259,
+        "mrr": 0.545,
+        "p50LatencyMs": 440,
+        "p95LatencyMs": 637
+      },
+      "fused": {
+        "ndcg10": 0.506,
+        "recall5": 0.259,
+        "mrr": 0.567,
+        "p50LatencyMs": 432,
+        "p95LatencyMs": 533
+      },
+      "fusedRerank": {
+        "ndcg10": 0.506,
+        "recall5": 0.259,
+        "mrr": 0.567,
+        "p50LatencyMs": 459,
+        "p95LatencyMs": 611
+      }
+    }
+  },
+  {
+    "runId": "2026-05-29T09:49:14.210Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.065,
+        "mrr": 0.281,
+        "p50LatencyMs": 3,
+        "p95LatencyMs": 7
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.232,
+        "mrr": 0.545,
+        "p50LatencyMs": 453,
+        "p95LatencyMs": 585
+      },
+      "fused": {
+        "ndcg10": 0.37,
+        "recall5": 0.236,
+        "mrr": 0.458,
+        "p50LatencyMs": 415,
+        "p95LatencyMs": 535
+      },
+      "fusedRerank": {
+        "ndcg10": 0.37,
+        "recall5": 0.236,
+        "mrr": 0.458,
+        "p50LatencyMs": 474,
+        "p95LatencyMs": 601
+      }
+    }
+  },
+  {
+    "runId": "2026-05-29T10:08:51.931Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.065,
+        "mrr": 0.281,
+        "p50LatencyMs": 4,
+        "p95LatencyMs": 6
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.232,
+        "mrr": 0.545,
+        "p50LatencyMs": 433,
+        "p95LatencyMs": 694
+      },
+      "fused": {
+        "ndcg10": 0.37,
+        "recall5": 0.236,
+        "mrr": 0.458,
+        "p50LatencyMs": 432,
+        "p95LatencyMs": 663
+      },
+      "fusedRerank": {
+        "ndcg10": 0.434,
+        "recall5": 0.282,
+        "mrr": 0.536,
+        "p50LatencyMs": 628,
+        "p95LatencyMs": 756
+      }
+    }
+  }
+]

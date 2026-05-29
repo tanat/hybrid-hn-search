@@ -10,6 +10,9 @@ export async function sparseRetrieve(
   const t0 = performance.now();
   // plainto_tsquery is the safe choice for free-text user input;
   // it never throws on weird punctuation. (to_tsquery does.)
+  // plainto_tsquery uses AND — all terms must be present, which returns near-zero
+  // results on a small corpus. Convert to OR by extracting individual lexemes so
+  // ts_rank_cd can score by term frequency (BM25-like behaviour).
   const rows = await db<
     Array<{
       id: number;
@@ -25,9 +28,15 @@ export async function sparseRetrieve(
   >`
     SELECT c.id, c.story_id, c.story_title, c.story_url, c.author, c.text,
            c.points, c.created_at,
-           ts_rank_cd(c.text_search, plainto_tsquery('english', ${query})) AS score
-    FROM comments c
-    WHERE c.text_search @@ plainto_tsquery('english', ${query})
+           ts_rank_cd(c.text_search, query) AS score
+    FROM comments c,
+         to_tsquery('english',
+           array_to_string(
+             ARRAY(SELECT lexeme FROM unnest(to_tsvector('english', ${query}))),
+             ' | '
+           )
+         ) query
+    WHERE c.text_search @@ query
     ORDER BY score DESC
     LIMIT ${k}
   `;
