@@ -1,28 +1,28 @@
-import {
-  AutoTokenizer,
-  AutoModelForSequenceClassification,
-  env as transformersEnv,
-} from '@huggingface/transformers';
-
-// Don't try to fetch from local — always pull from HF Hub on first run, cached
-// thereafter under ~/.cache/huggingface (or wherever transformers.js writes).
-transformersEnv.allowLocalModels = false;
-transformersEnv.allowRemoteModels = true;
-
 const MODEL_ID = 'Xenova/ms-marco-MiniLM-L-6-v2';
 
 // ms-marco cross-encoders have num_labels=1: they output a single raw logit,
 // not a probability. The text-classification pipeline wraps it in sigmoid()
 // which saturates to 1.0 for any logit > ~5 — all docs look identical.
 // We use the lower-level API to get the raw logit directly for ranking.
+//
+// @huggingface/transformers is imported dynamically so the static module graph
+// never references onnxruntime-node — which has native binaries unavailable in
+// the Vercel Lambda environment. The Vercel guard in modes.ts prevents this
+// function from being called in production, but the import must not fail at
+// load time either.
 let loadPromise: Promise<{ tokenizer: unknown; model: unknown }> | null = null;
 
 async function getReranker() {
   if (!loadPromise) {
-    loadPromise = Promise.all([
-      AutoTokenizer.from_pretrained(MODEL_ID),
-      AutoModelForSequenceClassification.from_pretrained(MODEL_ID),
-    ]).then(([tokenizer, model]) => ({ tokenizer, model }));
+    loadPromise = import('@huggingface/transformers').then(async (tf) => {
+      tf.env.allowLocalModels = false;
+      tf.env.allowRemoteModels = true;
+      const [tokenizer, model] = await Promise.all([
+        tf.AutoTokenizer.from_pretrained(MODEL_ID),
+        tf.AutoModelForSequenceClassification.from_pretrained(MODEL_ID),
+      ]);
+      return { tokenizer, model };
+    });
   }
   return loadPromise;
 }

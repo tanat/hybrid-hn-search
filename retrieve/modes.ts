@@ -1,7 +1,6 @@
 import { denseRetrieve } from './dense';
 import { sparseRetrieve } from './sparse';
 import { rrfFuse } from './fuse';
-import { rerank } from './rerank';
 import type { RetrievalMode, RetrievalResult } from './types';
 
 export type RetrievalLatency = {
@@ -117,6 +116,7 @@ export async function runRetrieval(
 
   const candidates = fusedDocs.slice(0, FUSED_K_BEFORE_RERANK);
   const t1 = performance.now();
+  const { rerank } = await import('./rerank');
   const reranked = await rerank(
     query,
     candidates.map((c) => ({ id: c.id, text: c.text })),
