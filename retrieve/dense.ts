@@ -1,10 +1,22 @@
 import { embed } from 'ai';
-import { db } from '../db/client';
+import { supabase } from '../db/supabase';
 import type { RetrievalResult } from './types';
 
 const MODEL_ID = 'openai/text-embedding-3-small';
 
 export type DenseTimings = { embedMs: number; retrieveMs: number };
+
+type MatchRow = {
+  id: number;
+  story_id: number;
+  story_title: string;
+  story_url: string | null;
+  author: string;
+  text: string;
+  points: number;
+  created_at: string;
+  score: number;
+};
 
 export async function denseRetrieve(
   query: string,
@@ -17,31 +29,18 @@ export async function denseRetrieve(
   });
   const t1 = performance.now();
 
-  const vectorLiteral = `[${embedding.join(',')}]`;
-
-  const rows = await db<
-    Array<{
-      id: number;
-      story_id: number;
-      story_title: string;
-      story_url: string | null;
-      author: string;
-      text: string;
-      points: number;
-      created_at: Date;
-      score: number;
-    }>
-  >`
-    SELECT c.id, c.story_id, c.story_title, c.story_url, c.author, c.text,
-           c.points, c.created_at,
-           1 - (e.embedding <=> ${vectorLiteral}::vector) AS score
-    FROM embeddings e
-    JOIN comments c ON c.id = e.comment_id
-    ORDER BY e.embedding <=> ${vectorLiteral}::vector
-    LIMIT ${k}
-  `;
+  // pgvector cosine search runs in the match_comments() RPC; supabase-js sends
+  // the embedding as a JSON array and PostgREST casts it to vector(1536).
+  const { data, error } = await supabase.rpc('match_comments', {
+    query_embedding: embedding,
+    match_count: k,
+  });
   const t2 = performance.now();
+  if (error) {
+    throw new Error(`match_comments RPC failed: ${error.message}`);
+  }
 
+  const rows = (data ?? []) as MatchRow[];
   const results: RetrievalResult[] = rows.map((r, i) => ({
     id: Number(r.id),
     story_id: Number(r.story_id),
@@ -50,7 +49,7 @@ export async function denseRetrieve(
     author: r.author,
     text: r.text,
     points: r.points,
-    created_at: r.created_at instanceof Date ? r.created_at.toISOString() : String(r.created_at),
+    created_at: new Date(r.created_at).toISOString(),
     score: Number(r.score),
     rank: i + 1,
   }));

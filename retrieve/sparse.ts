@@ -1,47 +1,38 @@
-import { db } from '../db/client';
+import { supabase } from '../db/supabase';
 import type { RetrievalResult } from './types';
 
 export type SparseTimings = { retrieveMs: number };
+
+type MatchRow = {
+  id: number;
+  story_id: number;
+  story_title: string;
+  story_url: string | null;
+  author: string;
+  text: string;
+  points: number;
+  created_at: string;
+  score: number;
+};
 
 export async function sparseRetrieve(
   query: string,
   k = 50,
 ): Promise<{ results: RetrievalResult[]; timings: SparseTimings }> {
   const t0 = performance.now();
-  // plainto_tsquery is the safe choice for free-text user input;
-  // it never throws on weird punctuation. (to_tsquery does.)
-  // plainto_tsquery uses AND — all terms must be present, which returns near-zero
-  // results on a small corpus. Convert to OR by extracting individual lexemes so
-  // ts_rank_cd can score by term frequency (BM25-like behaviour).
-  const rows = await db<
-    Array<{
-      id: number;
-      story_id: number;
-      story_title: string;
-      story_url: string | null;
-      author: string;
-      text: string;
-      points: number;
-      created_at: Date;
-      score: number;
-    }>
-  >`
-    SELECT c.id, c.story_id, c.story_title, c.story_url, c.author, c.text,
-           c.points, c.created_at,
-           ts_rank_cd(c.text_search, query) AS score
-    FROM comments c,
-         to_tsquery('english',
-           array_to_string(
-             ARRAY(SELECT lexeme FROM unnest(to_tsvector('english', ${query}))),
-             ' | '
-           )
-         ) query
-    WHERE c.text_search @@ query
-    ORDER BY score DESC
-    LIMIT ${k}
-  `;
+  // Full-text / BM25-like scoring runs in the search_comments() RPC. The OR
+  // semantics (lexeme extraction) and ts_rank_cd live in SQL — see
+  // supabase/migrations/*_search_functions.sql.
+  const { data, error } = await supabase.rpc('search_comments', {
+    query_text: query,
+    match_count: k,
+  });
   const t1 = performance.now();
+  if (error) {
+    throw new Error(`search_comments RPC failed: ${error.message}`);
+  }
 
+  const rows = (data ?? []) as MatchRow[];
   const results: RetrievalResult[] = rows.map((r, i) => ({
     id: Number(r.id),
     story_id: Number(r.story_id),
@@ -50,7 +41,7 @@ export async function sparseRetrieve(
     author: r.author,
     text: r.text,
     points: r.points,
-    created_at: r.created_at instanceof Date ? r.created_at.toISOString() : String(r.created_at),
+    created_at: new Date(r.created_at).toISOString(),
     score: Number(r.score),
     rank: i + 1,
   }));
