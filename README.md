@@ -141,7 +141,9 @@ prebuilds + the ~90 MB ONNX weights) usually exceeds the 50 MB Vercel
 function size limit, so the `runRetrieval` dispatcher treats `fused-rerank`
 as `fused` when `process.env.VERCEL` is set (override with `RERANK_IN_PROD=1`).
 The local dev server still demonstrates the full pipeline, and the eval table
-proves the rerank lift.
+proves the rerank lift. The SQLite query log is likewise local-dev only —
+`logSearch` no-ops on Vercel (read-only filesystem), so search still returns
+normally without a persisted row.
 
 The artifact of value is `evals/results.json`; the live demo is supporting
 material.

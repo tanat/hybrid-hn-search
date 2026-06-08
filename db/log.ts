@@ -46,6 +46,10 @@ export type LogEntry = {
 };
 
 export function logSearch(entry: LogEntry) {
+  // The SQLite query log is a local-dev artifact. Vercel's filesystem is
+  // read-only (outside /tmp) and ephemeral, so skip logging in production —
+  // search still returns normally, just without a persisted row.
+  if (process.env.VERCEL) return;
   const db = getDb();
   db.prepare(
     `INSERT INTO searches
