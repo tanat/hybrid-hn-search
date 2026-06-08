@@ -20,9 +20,12 @@ Format: *I chose X over Y because Z, and the cost of Z is W.*
 ## 1. Postgres + pgvector for both dense and sparse, instead of a separate vector DB
 
 **Picked.** Single Postgres 17 instance with `vector` for cosine search and
-`tsvector` + GIN for BM25-style FTS. One connection string, one schema, one
-backup. Dev runs in docker compose; prod is Neon free tier (5GB, includes
-pgvector).
+`tsvector` + GIN for BM25-style FTS. One schema, one backup. Both run on
+**Supabase** — local via the Supabase CLI (`supabase start`), prod on managed
+Supabase — so dev and prod are the same Postgres + pgvector applied from the same
+migrations (`supabase db push`). The app's read path goes through SQL functions
+(`match_comments` / `search_comments`) called with the anon key under RLS, so it
+carries no privileged DB secret; ingest keeps a direct superuser connection.
 
 **Alternatives I weighed.** (a) Pinecone / Weaviate / Qdrant for dense +
 Elasticsearch / Meili for sparse. (b) Single-node Qdrant or ChromaDB.

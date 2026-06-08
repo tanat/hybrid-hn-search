@@ -14,14 +14,16 @@
 | AI SDK | Vercel AI SDK | `embedMany`/`embed` for query and bulk ingest; `generateText` + `Output.object` for structured grader output; `gateway('provider/model')` for OpenAI + Anthropic routing |
 | Embeddings | OpenAI `text-embedding-3-small` | 1536 dims, $0.02/M tokens — ~$0.01 once for 5000 comments. Routed via AI Gateway through the string id `'openai/text-embedding-3-small'` |
 | LLM grader | `openai/gpt-4o-mini` or `anthropic/claude-haiku-4-5` via `gateway()`; `gemini-2.5-flash` direct via `createGoogleGenerativeAI` | Optional `--provider=gemini\|claude\|openai` switch on `pnpm grade:auto` |
-| Database (dev) | Postgres 17 + pgvector | via Docker Compose |
-| Database (prod) | Neon free tier | 5GB, has pgvector |
+| Database (dev) | Supabase (Postgres 17 + pgvector) | local stack via Supabase CLI (`supabase start`) |
+| Database (prod) | Supabase | managed Postgres + pgvector; `supabase db push` from migrations |
 | Vector index | pgvector HNSW | `m=16, ef_construction=64` |
 | Sparse index | Postgres `tsvector` | GIN index |
+| Retrieval API | supabase-js `.rpc()` | `match_comments` (vector) + `search_comments` (FTS) SQL functions; RRF + rerank stay in JS |
+| Access control | Postgres RLS | `comments` readable by anon; `embeddings` private — reachable only via the SECURITY DEFINER RPCs |
 | Reranker | `Xenova/ms-marco-MiniLM-L-6-v2` | cross-encoder via `onnxruntime-node` |
 | Source data | HN Algolia API | https://hn.algolia.com/api |
 | Observability | NDJSON + SQLite | per-query log |
-| Deploy | Vercel + Neon | env: `AI_GATEWAY_API_KEY` (required), `DATABASE_URL` (required), `GEMINI_API_KEY` / `GOOGLE_GENERATIVE_AI_API_KEY` (optional, only for `--provider=gemini`) |
+| Deploy | Vercel + Supabase | env: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `AI_GATEWAY_API_KEY`, `DATABASE_URL` (required); `GEMINI_API_KEY` / `GOOGLE_GENERATIVE_AI_API_KEY` (optional, only for `--provider=gemini`) |
 
 **Intentionally not used:** Pinecone / Weaviate / Qdrant (pgvector handles 5000 vectors trivially), Faiss + manual HNSW (pgvector wraps it under SQL), external reranker APIs (Cohere, Voyage — paid; local ONNX is free), per-provider keys (a single `AI_GATEWAY_API_KEY` covers OpenAI + Anthropic).
 
@@ -135,12 +137,14 @@ hybrid-hn-search/
 │       ├── search/route.ts          # POST { query, mode } → results
 │       └── synthesize/route.ts      # POST { query, results } → summary
 │
+├── supabase/
+│   ├── config.toml                  # local stack config (supabase start)
+│   └── migrations/                  # schema → search RPCs → RLS
+│
 ├── db/
-│   ├── schema.sql                   # comments + embeddings tables
-│   ├── migrations/                  # numbered .sql files
-│   ├── client.ts                    # postgres.js or pg client
-│   └── seed/
-│       └── pgvector-extension.sql
+│   ├── supabase.ts                  # anon supabase-js client (retrieval)
+│   ├── client.ts                    # postgres.js client (ingest + evals)
+│   └── log.ts                       # sqlite per-query log
 │
 ├── ingest/
 │   ├── fetch-comments.ts            # HN Algolia → fixtures/comments.json
@@ -181,12 +185,9 @@ hybrid-hn-search/
 ├── logs/
 │   └── queries.sqlite               # per-search log
 │
-├── docker/
-│   └── docker-compose.yml           # postgres + pgvector
-│
 ├── scripts/
 │   ├── inspect-result.ts            # CLI: read SQLite log, format query
-│   └── export-for-deploy.ts         # SQL dump for migration to Neon
+│   └── test-{dense,sparse}.ts       # ad-hoc retrieval checks
 │
 ├── DECISIONS.md
 └── README.md
@@ -197,7 +198,7 @@ hybrid-hn-search/
 ## Database schema
 
 ```sql
--- db/schema.sql
+-- supabase/migrations/<ts>_initial_schema.sql (pgvector lives in the extensions schema)
 CREATE EXTENSION IF NOT EXISTS vector;
 
 CREATE TABLE comments (
@@ -239,58 +240,72 @@ CREATE INDEX idx_embeddings_hnsw ON embeddings
   WITH (m = 16, ef_construction = 64);
 ```
 
+A later migration enables RLS: `comments` gets a public `SELECT` policy (it's
+already-public HN data, so the search UI runs on the anon key), while
+`embeddings` has RLS on with **no** policy — the raw vectors are only ever read
+through the `SECURITY DEFINER` retrieval functions. Ingestion connects as the
+postgres superuser over `DATABASE_URL` and bypasses RLS entirely.
+
 ---
 
 ## Retrieval implementations
 
-### Dense (cosine via pgvector)
+### Dense (cosine via pgvector RPC)
 
 ```ts
-// retrieve/dense.ts — string-id model is auto-routed through the
-// AI Gateway when AI_GATEWAY_API_KEY is set
-import { db } from '@/db/client';
+// retrieve/dense.ts — embed the query (auto-routed through the AI Gateway when
+// AI_GATEWAY_API_KEY is set), then call the match_comments() SQL function.
+import { supabase } from '@/db/supabase';
 import { embed } from 'ai';
 
 const MODEL_ID = 'openai/text-embedding-3-small';
 
 export async function denseRetrieve(query: string, k = 50) {
-  const { embedding } = await embed({
-    model: MODEL_ID,
-    value: query,
+  const { embedding } = await embed({ model: MODEL_ID, value: query });
+  const { data, error } = await supabase.rpc('match_comments', {
+    query_embedding: embedding, // PostgREST casts the JSON array to vector(1536)
+    match_count: k,
   });
-  const vectorLiteral = `[${embedding.join(',')}]`;
-
-  const rows = await db`
-    SELECT c.id, c.story_title, c.author, c.text, c.points, c.created_at,
-           1 - (e.embedding <=> ${vectorLiteral}::vector) AS score
-    FROM embeddings e
-    JOIN comments c ON c.id = e.comment_id
-    ORDER BY e.embedding <=> ${vectorLiteral}::vector
-    LIMIT ${k}
-  `;
-
-  return rows.map((r, i) => ({ ...r, rank: i + 1 }));
+  if (error) throw new Error(error.message);
+  return (data ?? []).map((r, i) => ({ ...r, rank: i + 1 }));
 }
 ```
 
-### Sparse (BM25-ish via Postgres FTS)
+The cosine search itself is a `SECURITY DEFINER` SQL function, so it can read the
+private `embeddings` table that anon cannot touch directly:
+
+```sql
+-- supabase/migrations/<ts>_search_functions.sql
+create function public.match_comments(query_embedding extensions.vector(1536), match_count int)
+returns table (id bigint, /* ...payload... */ score double precision)
+language sql stable security definer set search_path = public, extensions
+as $$
+  select c.id, /* ... */, 1 - (e.embedding <=> query_embedding) as score
+  from embeddings e join comments c on c.id = e.comment_id
+  order by e.embedding <=> query_embedding
+  limit match_count
+$$;
+```
+
+### Sparse (BM25-ish via Postgres FTS RPC)
 
 ```ts
 // retrieve/sparse.ts
-export async function sparseRetrieve(query: string, k = 50) {
-  // to_tsquery doesn't accept free text; use plainto_tsquery for safety
-  const rows = await db.unsafe(`
-    SELECT c.id, c.story_title, c.author, c.text, c.points, c.created_at,
-           ts_rank_cd(c.text_search, plainto_tsquery('english', $1)) AS score
-    FROM comments c
-    WHERE c.text_search @@ plainto_tsquery('english', $1)
-    ORDER BY score DESC
-    LIMIT $2
-  `, [query, k]);
+import { supabase } from '@/db/supabase';
 
-  return rows.map((r, i) => ({ ...r, rank: i + 1 }));
+export async function sparseRetrieve(query: string, k = 50) {
+  const { data, error } = await supabase.rpc('search_comments', {
+    query_text: query,
+    match_count: k,
+  });
+  if (error) throw new Error(error.message);
+  return (data ?? []).map((r, i) => ({ ...r, rank: i + 1 }));
 }
 ```
+
+`search_comments()` extracts the query's lexemes and ORs them so `ts_rank_cd`
+ranks by term frequency even on a small corpus — same SQL as before, now living
+in the migration instead of a tagged template (full text in the migration file).
 
 ### RRF fusion
 

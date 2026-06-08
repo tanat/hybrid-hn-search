@@ -32,11 +32,13 @@ fusion or grading.
 ## Try it
 
 ```bash
-docker compose -f docker/docker-compose.yml up -d   # postgres on :5433
-
-cp .env.local.example .env.local                    # add AI_GATEWAY_API_KEY
 pnpm install
-pnpm db:reset
+pnpm db:start        # local Supabase via Docker — API :54321, Postgres :54322, Studio :54323
+pnpm db:reset        # apply supabase/migrations: schema + search RPCs + RLS
+
+cp .env.local.example .env.local   # add AI_GATEWAY_API_KEY
+pnpm db:status       # copy API URL + anon key into SUPABASE_URL / SUPABASE_ANON_KEY
+
 pnpm ingest:fetch    # ~10 min, HN Algolia API (no key)
 pnpm ingest:load     # ~30 sec, JSON → comments table
 pnpm ingest:embed    # ~5 min, ~$0.01, needs AI_GATEWAY_API_KEY
@@ -45,10 +47,11 @@ pnpm dev             # http://localhost:3000
 
 Embeddings and LLM grader providers route through the Vercel AI Gateway, so a
 single `AI_GATEWAY_API_KEY` covers OpenAI (`openai/...`) and Anthropic
-(`anthropic/...`) without separate provider keys. `DATABASE_URL` is the only
-other required env var. Gemini grading is direct via the Google SDK and needs
-`GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) only if you pick
-`--provider=gemini`.
+(`anthropic/...`) without separate provider keys. The app reads `SUPABASE_URL`
++ `SUPABASE_ANON_KEY` (search runs on the anon key via RPC + RLS); bulk ingest
+and the eval harness use the direct `DATABASE_URL`. Gemini grading is direct via
+the Google SDK and needs `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`)
+only if you pick `--provider=gemini`.
 
 The 3-way compare panel runs `bm25`, `dense`, and `fused-rerank` in
 parallel; the radio toggle on the page can also drive single-mode
@@ -92,12 +95,14 @@ relevant comment that the grader never got to see.
 
 ## Architecture
 
-Single Postgres 17 + pgvector for both indexes. RRF fusion over ranks
-(no score normalization). Cross-encoder reranker over fusion top-20.
-Full reasoning lives in [ARCHITECTURE.md](./ARCHITECTURE.md) and the
-three forks I picked are written up in [DECISIONS.md](./DECISIONS.md):
+Supabase Postgres + pgvector for both indexes — vector and full-text search run
+as SQL RPCs (`match_comments` / `search_comments`) that the app calls with the
+anon key, gated by RLS. RRF fusion over ranks (no score normalization) and the
+cross-encoder reranker over fusion top-20 stay in JS. Full reasoning lives in
+[ARCHITECTURE.md](./ARCHITECTURE.md) and the three forks are written up in
+[DECISIONS.md](./DECISIONS.md):
 
-- pgvector + Postgres FTS, not a separate vector DB
+- pgvector + Postgres FTS on Supabase, not a separate vector DB
 - RRF fusion, not weighted score combine
 - Reranker top-20, not top-50 and not skipped
 
@@ -105,35 +110,38 @@ three forks I picked are written up in [DECISIONS.md](./DECISIONS.md):
 
 ```
 app/                 Next.js 15 routes (search, /eval, /eval/[queryHash], /api/search)
-db/                  schema.sql, migrations/, postgres.js client, sqlite query log
+supabase/            config.toml + migrations/ (schema, search RPCs, RLS)
+db/                  supabase.ts (anon retrieval client), client.ts (postgres.js), sqlite query log
 ingest/              fetch-comments.ts, load-postgres.ts, embed.ts
 retrieve/            dense.ts, sparse.ts, fuse.ts, rerank.ts, modes.ts dispatcher
 render/              CommentCard, ResultsColumn, EvalTable, DiffView
 evals/               score.ts, grades-store.ts, grading-cli.ts, build-candidate-pool.ts,
                      harness.ts, results.json (append-only), README.md (methodology)
 fixtures/            comments.json (committed), queries.json, candidate-grades.json
-docker/              docker-compose.yml (pgvector/pg17, host port 5433)
-scripts/             test-{dense,sparse,mode}.ts, export-for-deploy.ts
+scripts/             test-{dense,sparse,mode}.ts
 ```
 
 ## Deploy
 
-`scripts/export-for-deploy.ts` runs `pg_dump` against the local docker
-container into `deploy/schema.sql` + `deploy/data.sql`. Apply both to a
-fresh Neon database (`CREATE EXTENSION vector` first), then push to
-Vercel with `AI_GATEWAY_API_KEY` and `DATABASE_URL` env vars.
+Dev and prod are the same stack, so deploy is a Supabase push, not a
+dump/restore:
+
+```bash
+pnpm supabase link --project-ref <your-project-ref>
+pnpm supabase db push          # applies supabase/migrations to the hosted project
+```
+
+Then load the corpus against the hosted `DATABASE_URL` (`pnpm ingest:load` +
+`pnpm ingest:embed`, or apply the committed `deploy/data.sql` dump), and deploy
+the Next.js app to Vercel with `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+`DATABASE_URL`, and `AI_GATEWAY_API_KEY` set.
 
 The reranker bundle (`@huggingface/transformers` + `onnxruntime-node`
 prebuilds + the ~90 MB ONNX weights) usually exceeds the 50 MB Vercel
-function size limit. Two strategies:
-
-- (a) **Disable rerank in production:** the `runRetrieval` dispatcher
-  treats `fused-rerank` as `fused` when `process.env.VERCEL` is set.
-  The local dev server still demonstrates the full pipeline, and the
-  numbers in the eval table prove the rerank lift.
-- (b) **Try `serverComponentsExternalPackages: ['@huggingface/transformers']`**
-  in `next.config.ts`. Sometimes works, often doesn't, depending on
-  current Vercel build limits.
+function size limit, so the `runRetrieval` dispatcher treats `fused-rerank`
+as `fused` when `process.env.VERCEL` is set (override with `RERANK_IN_PROD=1`).
+The local dev server still demonstrates the full pipeline, and the eval table
+proves the rerank lift.
 
 The artifact of value is `evals/results.json`; the live demo is supporting
 material.
