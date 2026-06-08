@@ -63,3 +63,6 @@ fixtures/candidate-pool.json
 
 # generated SQL dumps for Neon migration; rebuild via scripts/export-for-deploy.ts
 deploy/
+
+# agent memory (lives in ~/.claude, never in the repo)
+memory/
