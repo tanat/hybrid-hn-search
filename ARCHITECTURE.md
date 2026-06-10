@@ -11,9 +11,9 @@
 | Framework | Next.js 15 App Router | React 19 |
 | Language | TypeScript strict | |
 | Styling | Tailwind CSS + shadcn/ui | |
-| AI SDK | Vercel AI SDK | `embedMany`/`embed` for query and bulk ingest; `generateText` + `Output.object` for structured grader output; `gateway('provider/model')` for OpenAI + Anthropic routing |
+| AI SDK | Vercel AI SDK | `embedMany`/`embed` for query and bulk ingest; `generateText` + `Output.object` for structured grader output; `gateway('provider/model')` for OpenAI + Anthropic + Google routing |
 | Embeddings | OpenAI `text-embedding-3-small` | 1536 dims, $0.02/M tokens — ~$0.01 once for 5000 comments. Routed via AI Gateway through the string id `'openai/text-embedding-3-small'` |
-| LLM grader | `openai/gpt-4o-mini` or `anthropic/claude-haiku-4-5` via `gateway()`; `gemini-2.5-flash` direct via `createGoogleGenerativeAI` | Optional `--provider=gemini\|claude\|openai` switch on `pnpm grade:auto` |
+| LLM grader | `openai/gpt-4o-mini`, `anthropic/claude-haiku-4-5`, or `google/gemini-2.5-flash` — all via `gateway('provider/model')` | Optional `--provider=gemini\|claude\|openai` switch on `pnpm grade:auto` |
 | Database (dev) | Supabase (Postgres 17 + pgvector) | local stack via Supabase CLI (`supabase start`) |
 | Database (prod) | Supabase | managed Postgres + pgvector; `supabase db push` from migrations |
 | Vector index | pgvector HNSW | `m=16, ef_construction=64` |
@@ -23,9 +23,9 @@
 | Reranker | `Xenova/ms-marco-MiniLM-L-6-v2` | cross-encoder via `onnxruntime-node` |
 | Source data | HN Algolia API | https://hn.algolia.com/api |
 | Observability | NDJSON + SQLite | per-query log |
-| Deploy | Vercel + Supabase | env: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `AI_GATEWAY_API_KEY`, `DATABASE_URL` (required); `GEMINI_API_KEY` / `GOOGLE_GENERATIVE_AI_API_KEY` (optional, only for `--provider=gemini`) |
+| Deploy | Vercel + Supabase | env: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `AI_GATEWAY_API_KEY`, `DATABASE_URL` (required). The Gemini grader also routes through the gateway on the single `AI_GATEWAY_API_KEY` — no per-provider key needed |
 
-**Intentionally not used:** Pinecone / Weaviate / Qdrant (pgvector handles 5000 vectors trivially), Faiss + manual HNSW (pgvector wraps it under SQL), external reranker APIs (Cohere, Voyage — paid; local ONNX is free), per-provider keys (a single `AI_GATEWAY_API_KEY` covers OpenAI + Anthropic).
+**Intentionally not used:** Pinecone / Weaviate / Qdrant (pgvector handles 5000 vectors trivially), Faiss + manual HNSW (pgvector wraps it under SQL), external reranker APIs (Cohere, Voyage — paid; local ONNX is free), per-provider keys (a single `AI_GATEWAY_API_KEY` covers OpenAI + Anthropic + Google).
 
 ---
 

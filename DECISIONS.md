@@ -4,16 +4,15 @@ Three architectural forks where I picked one path over a defensible alternative.
 Format: *I chose X over Y because Z, and the cost of Z is W.*
 
 > **Aside: provider plumbing.** OpenAI (embeddings + `gpt-4o-mini`
-> LLM grader) and Anthropic (`claude-haiku-4-5` LLM grader) traffic
-> routes through the Vercel AI Gateway: `gateway('openai/...')`,
-> `gateway('anthropic/...')`, or the bare model-id string for
+> LLM grader), Anthropic (`claude-haiku-4-5` LLM grader), and Google
+> (`gemini-2.5-flash` LLM grader) traffic all routes through the Vercel
+> AI Gateway: `gateway('openai/...')`, `gateway('anthropic/...')`,
+> `gateway('google/...')`, or the bare model-id string for
 > `embedMany` / `embed` (auto-routes when `AI_GATEWAY_API_KEY` is set).
-> One `AI_GATEWAY_API_KEY` + `DATABASE_URL` are enough to run the app;
-> `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`) is optional and is
-> consumed directly via `createGoogleGenerativeAI`, because Gemini
-> through the Gateway adds nothing useful for a single baseline grader.
-> Not an architectural fork — just deploy plumbing that collapses two
-> provider keys into one.
+> One `AI_GATEWAY_API_KEY` + `DATABASE_URL` are enough to run the app —
+> the Gemini grader also rides the same key, so there's no separate
+> Google credential to manage. Not an architectural fork — just deploy
+> plumbing that collapses every provider key into one.
 
 ---
 

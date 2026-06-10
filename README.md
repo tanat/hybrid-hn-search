@@ -46,12 +46,12 @@ pnpm dev             # http://localhost:3000
 ```
 
 Embeddings and LLM grader providers route through the Vercel AI Gateway, so a
-single `AI_GATEWAY_API_KEY` covers OpenAI (`openai/...`) and Anthropic
-(`anthropic/...`) without separate provider keys. The app reads `SUPABASE_URL`
-+ `SUPABASE_ANON_KEY` (search runs on the anon key via RPC + RLS); bulk ingest
-and the eval harness use the direct `DATABASE_URL`. Gemini grading is direct via
-the Google SDK and needs `GEMINI_API_KEY` (or `GOOGLE_GENERATIVE_AI_API_KEY`)
-only if you pick `--provider=gemini`.
+single `AI_GATEWAY_API_KEY` covers OpenAI (`openai/...`), Anthropic
+(`anthropic/...`), and Google (`google/...`) without separate provider keys. The
+app reads `SUPABASE_URL` + `SUPABASE_ANON_KEY` (search runs on the anon key via
+RPC + RLS); bulk ingest and the eval harness use the direct `DATABASE_URL`. The
+Gemini grader (`--provider=gemini`) also routes through the gateway on the same
+`AI_GATEWAY_API_KEY` — no per-provider key needed.
 
 The 3-way compare panel runs `bm25`, `dense`, and `fused-rerank` in
 parallel; the radio toggle on the page can also drive single-mode
