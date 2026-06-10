@@ -5,6 +5,16 @@ import { DiffView, type GradedResult } from '@/render/DiffView';
 import { queryHash } from '@/evals/queryHash';
 import { runRetrieval, ALL_MODES } from '@/retrieve/modes';
 import type { Grade } from '@/evals/grades-store';
+import { buttonVariants } from '@/components/ui/button';
+import { ArrowLeft, Search } from 'lucide-react';
+
+const GRADE_LEGEND: Array<{ key: string; label: string; cls: string }> = [
+  { key: '3', label: 'highly relevant', cls: 'bg-green-200 text-green-900 dark:bg-green-500/25 dark:text-green-200' },
+  { key: '2', label: 'partially', cls: 'bg-green-100 text-green-800 dark:bg-green-500/15 dark:text-green-300' },
+  { key: '1', label: 'tangential', cls: 'bg-amber-100 text-amber-900 dark:bg-amber-500/15 dark:text-amber-300' },
+  { key: '0', label: 'irrelevant', cls: 'bg-zinc-100 text-zinc-600 dark:bg-zinc-700/40 dark:text-zinc-300' },
+  { key: '?', label: 'not yet graded', cls: 'ring-1 ring-inset ring-border text-zinc-400 dark:text-zinc-500' },
+];
 
 export const dynamic = 'force-dynamic';
 
@@ -67,30 +77,43 @@ export default async function PerQueryEval({
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-7xl p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <Link
-          href="/eval"
-          className="text-sm text-muted-foreground underline hover:text-foreground"
-        >
-          ← back to eval dashboard
-        </Link>
-        <Link
-          href="/"
-          className="text-sm text-muted-foreground underline hover:text-foreground"
-        >
-          search →
-        </Link>
-      </div>
-      <DiffView perMode={perMode} query={query} />
-      <p className="mt-6 text-xs text-muted-foreground">
-        Grades:{' '}
-        <span className="rounded bg-green-200 px-1.5 dark:bg-green-800">3</span> highly relevant,{' '}
-        <span className="rounded bg-green-100 px-1.5 dark:bg-green-900/40">2</span> partially,{' '}
-        <span className="rounded bg-yellow-100 px-1.5 dark:bg-yellow-900/40">1</span> tangential,{' '}
-        <span className="rounded bg-zinc-100 px-1.5 dark:bg-zinc-800">0</span> irrelevant,{' '}
-        <span className="rounded bg-zinc-50 px-1.5 italic dark:bg-zinc-900">?</span> not yet graded.
-      </p>
-    </main>
+    <div className="flex flex-1 flex-col">
+      <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+          <Link
+            href="/eval"
+            className={buttonVariants({ variant: 'outline', size: 'sm', className: 'gap-1.5' })}
+          >
+            <ArrowLeft className="size-4" />
+            <span className="hidden sm:inline">Eval dashboard</span>
+          </Link>
+          <Link
+            href="/"
+            className={buttonVariants({ variant: 'ghost', size: 'sm', className: 'gap-1.5' })}
+          >
+            <Search className="size-4" />
+            <span className="hidden sm:inline">Search</span>
+          </Link>
+        </div>
+      </header>
+
+      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-8">
+        <DiffView perMode={perMode} query={query} />
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-border bg-card/40 px-4 py-3 text-xs text-muted-foreground">
+          <span className="font-medium text-foreground/80">Grades</span>
+          {GRADE_LEGEND.map((g) => (
+            <span key={g.key} className="inline-flex items-center gap-1.5">
+              <span
+                className={`inline-flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[11px] font-semibold ${g.cls}`}
+              >
+                {g.key}
+              </span>
+              {g.label}
+            </span>
+          ))}
+        </div>
+      </main>
+    </div>
   );
 }

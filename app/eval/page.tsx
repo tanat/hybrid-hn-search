@@ -2,6 +2,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import Link from 'next/link';
 import { EvalTable, EvalRunMeta, type EvalRow } from '@/render/EvalTable';
 import { queryHash } from '@/evals/queryHash';
+import { buttonVariants } from '@/components/ui/button';
+import { ArrowLeft, BarChart3, ChevronRight, ClipboardList } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,74 +36,115 @@ export default function EvalDashboard() {
   const latest = runs.at(-1);
 
   return (
-    <main className="mx-auto min-h-screen max-w-6xl p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Eval Results</h1>
-        <Link
-          href="/"
-          className="text-sm text-muted-foreground underline hover:text-foreground"
-        >
-          ← back to search
-        </Link>
-      </div>
-
-      {!latest ? (
-        <div className="rounded border border-dashed p-6 text-sm text-muted-foreground">
-          No eval results yet. Run <code className="font-mono">pnpm eval</code> after grading
-          to populate <code className="font-mono">evals/results.json</code>.
-        </div>
-      ) : (
-        <>
-          <section className="mb-8">
-            <h2 className="mb-2 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-              Latest run
-            </h2>
-            <EvalRunMeta row={latest} />
-            <div className="mt-3 overflow-x-auto rounded border">
-              <EvalTable row={latest} />
+    <div className="flex flex-1 flex-col">
+      <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
+          <div className="flex items-center gap-3">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
+              <BarChart3 className="size-4.5" strokeWidth={2.5} />
+            </span>
+            <div className="leading-tight">
+              <h1 className="text-base font-semibold tracking-tight">Eval Results</h1>
+              <p className="hidden text-xs text-muted-foreground sm:block">
+                Offline retrieval quality &amp; latency benchmark
+              </p>
             </div>
-          </section>
+          </div>
+          <Link
+            href="/"
+            className={buttonVariants({ variant: 'outline', size: 'sm', className: 'gap-1.5' })}
+          >
+            <ArrowLeft className="size-4" />
+            <span className="hidden sm:inline">Back to search</span>
+          </Link>
+        </div>
+      </header>
 
-          {queries.length > 0 && (
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
+        {!latest ? (
+          <div className="flex flex-col items-center rounded-2xl border border-dashed border-border bg-card/40 px-6 py-14 text-center">
+            <span className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+              <ClipboardList className="size-5" />
+            </span>
+            <h2 className="text-sm font-semibold">No eval results yet</h2>
+            <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
+              Run <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">pnpm eval</code>{' '}
+              after grading to populate{' '}
+              <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
+                evals/results.json
+              </code>
+              .
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-8">
             <section>
-              <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                Per-query breakdown
-              </h2>
-              <ul className="space-y-1">
-                {queries.map((q) => (
-                  <li key={q}>
-                    <Link
-                      href={`/eval/${queryHash(q)}`}
-                      className="text-sm underline hover:text-foreground"
-                    >
-                      &ldquo;{q}&rdquo;
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Click a query to see the top-10 from each mode side-by-side, color-coded by
-                ground-truth grade.
+              <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  Latest run
+                </h2>
+              </div>
+              <EvalRunMeta row={latest} />
+              <div className="mt-4 overflow-x-auto rounded-xl border border-border bg-card">
+                <EvalTable row={latest} />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1">
+                  <span className="size-2 rounded bg-green-200 dark:bg-green-500/30" /> best
+                </span>{' '}
+                <span className="ml-2 inline-flex items-center gap-1">
+                  <span className="size-2 rounded bg-red-200 dark:bg-red-500/30" /> worst
+                </span>{' '}
+                <span className="ml-2">per metric across modes.</span>
               </p>
             </section>
-          )}
 
-          {runs.length > 1 && (
-            <section className="mt-10">
-              <h2 className="mb-2 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                Run history ({runs.length})
-              </h2>
-              <ul className="space-y-2 text-xs text-muted-foreground">
-                {[...runs].reverse().map((r) => (
-                  <li key={r.runId} className="font-mono">
-                    {r.runId} · embed={r.embeddingModel} · queries={r.queryCount}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-        </>
-      )}
-    </main>
+            {queries.length > 0 && (
+              <section>
+                <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  Per-query breakdown
+                </h2>
+                <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+                  {queries.map((q) => (
+                    <li key={q}>
+                      <Link
+                        href={`/eval/${queryHash(q)}`}
+                        className="group flex items-center justify-between gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-muted/60"
+                      >
+                        <span className="truncate text-foreground/90">&ldquo;{q}&rdquo;</span>
+                        <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Open a query to see the top-10 from each mode side-by-side, color-coded by
+                  ground-truth grade.
+                </p>
+              </section>
+            )}
+
+            {runs.length > 1 && (
+              <section>
+                <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  Run history ({runs.length})
+                </h2>
+                <ul className="space-y-1.5">
+                  {[...runs].reverse().map((r) => (
+                    <li
+                      key={r.runId}
+                      className="rounded-lg border border-border bg-card px-3 py-2 font-mono text-xs text-muted-foreground"
+                    >
+                      <span className="text-foreground/80">{r.runId}</span> · embed=
+                      {r.embeddingModel} · queries={r.queryCount}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
