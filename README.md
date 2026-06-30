@@ -1,5 +1,7 @@
 # Hybrid HN Search
 
+**[Live demo →](https://hybrid-hn-search.vercel.app)**
+
 Hybrid retrieval over a frozen Hacker News comment archive (4985 comments,
 last 12 months). Four modes — BM25, dense, RRF-fused, fused+reranker —
 running side-by-side. The artifact of value is the eval table, not the UI.
