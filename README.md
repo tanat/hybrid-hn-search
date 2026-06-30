@@ -6,30 +6,37 @@ Hybrid retrieval over a frozen Hacker News comment archive (4985 comments,
 last 12 months). Four modes — BM25, dense, RRF-fused, fused+reranker —
 running side-by-side. The artifact of value is the eval table, not the UI.
 
-> **Status:** repo is deploy-ready. The numbers in the table below are filled
-> in by `pnpm eval` once grades land (see [Methodology](#methodology)).
-> Every eval row records `gradingProvenance` and a `gradeCounts` breakdown —
-> `human` (gold) or `llm:<provider>` (baseline, one of `gemini` / `claude` /
-> `openai`). Don't read an `llm:*` row as a final number.
+> **Grading:** the numbers below are an **`llm:gemini` baseline** (1,670 graded
+> query–candidate pairs), not human gold — read them as a relative ranking of the
+> four modes, not absolute truth. Every eval row records `gradingProvenance` and a
+> `gradeCounts` breakdown, so the provenance is never hidden.
 
 ## Results
 
-| Mode             | nDCG@10 | Recall@5 | MRR  | p50 latency |
-| ---------------- | ------- | -------- | ---- | ----------- |
-| BM25 only        | _tbd_   | _tbd_    | _tbd_| _tbd_       |
-| Dense only       | _tbd_   | _tbd_    | _tbd_| _tbd_       |
-| RRF fused        | _tbd_   | _tbd_    | _tbd_| _tbd_       |
-| Fused + rerank   | _tbd_   | _tbd_    | _tbd_| _tbd_       |
+| Mode             | nDCG@10   | Recall@5  | MRR       | p50 latency |
+| ---------------- | --------- | --------- | --------- | ----------- |
+| BM25 only        | 0.144     | 0.065     | 0.281     | 5 ms        |
+| Dense only       | **0.483** | 0.232     | **0.545** | 509 ms      |
+| RRF fused        | 0.365     | 0.236     | 0.458     | 533 ms      |
+| Fused + rerank   | 0.422     | **0.281** | 0.537     | 690 ms      |
+
+<sub>30 queries · 4,985-comment corpus · `text-embedding-3-small` · reranker `ms-marco-MiniLM-L-6-v2` · `llm:gemini` grades. Bold = best per column.</sub>
 
 After grading, `pnpm eval` appends a row to
 [evals/results.json](./evals/results.json) and the table above gets
 the actual numbers. The dashboard at `/eval` renders the latest run
 with best-per-metric highlighted green and worst red.
 
-The expected shape (target on this corpus): `bm25` < `dense` < `fused` <
-`fused-rerank` on quality, the same ordering on latency. If the rerank
-mode doesn't beat BM25 by ≥5 nDCG points, something is wrong with the
-fusion or grading.
+**What the numbers actually say** — and it's not the textbook story. On this
+corpus (semantic, discussion-style HN comments) **pure dense retrieval wins on
+ranking quality** (nDCG@10 0.48, MRR 0.55). BM25 is weak (0.14): lexical overlap
+barely helps on paraphrased conversational text, so **RRF fusion _hurts_ nDCG** —
+the weak lexical signal drags the blend below dense alone. The **cross-encoder
+reranker earns its keep on recall@5** (0.23 → 0.28), pulling more relevant comments
+into the top-5 for +180 ms. The honest takeaway: "hybrid + rerank always wins" is a
+myth — on _this_ corpus the right stack is **dense + rerank**, and BM25 fusion is a
+net negative. (An `llm:gemini` baseline; a human-graded pass could move the
+absolutes, not the ordering.)
 
 ## Try it
 

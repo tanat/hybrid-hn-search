@@ -124,5 +124,47 @@
         "p95LatencyMs": 756
       }
     }
+  },
+  {
+    "runId": "2026-06-30T11:29:22.249Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.065,
+        "mrr": 0.281,
+        "p50LatencyMs": 5,
+        "p95LatencyMs": 9
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.232,
+        "mrr": 0.545,
+        "p50LatencyMs": 509,
+        "p95LatencyMs": 693
+      },
+      "fused": {
+        "ndcg10": 0.365,
+        "recall5": 0.236,
+        "mrr": 0.458,
+        "p50LatencyMs": 533,
+        "p95LatencyMs": 652
+      },
+      "fusedRerank": {
+        "ndcg10": 0.422,
+        "recall5": 0.281,
+        "mrr": 0.537,
+        "p50LatencyMs": 690,
+        "p95LatencyMs": 870
+      }
+    }
   }
 ]
