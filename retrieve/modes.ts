@@ -19,6 +19,16 @@ export type RetrievalRun = {
 
 const FUSED_K_BEFORE_RERANK = 20;
 
+/**
+ * On Vercel the @huggingface/transformers + onnxruntime-node bundle typically
+ * blows the 50 MB function size limit, so the deployed app serves the
+ * pre-rerank ranking. The eval table — run locally, where the reranker loads —
+ * is the artifact that proves the lift; the deploy is supporting material.
+ */
+function skipRerank(): boolean {
+  return Boolean(process.env.VERCEL) && process.env.RERANK_IN_PROD !== '1';
+}
+
 export async function runRetrieval(
   mode: RetrievalMode,
   query: string,
@@ -47,6 +57,50 @@ export async function runRetrieval(
         totalMs: performance.now() - startTotal,
         embedMs: timings.embedMs,
         retrieveMs: timings.retrieveMs,
+      },
+    };
+  }
+
+  // Dense retrieval followed by the cross-encoder, with no lexical leg. The
+  // configuration the README recommends, now actually measured.
+  if (mode === 'dense-rerank') {
+    const { results, timings } = await denseRetrieve(query, Math.max(50, FUSED_K_BEFORE_RERANK * 2));
+    const candidates = results.slice(0, FUSED_K_BEFORE_RERANK);
+
+    if (skipRerank()) {
+      return {
+        mode,
+        results: candidates.slice(0, k),
+        latency: {
+          totalMs: performance.now() - startTotal,
+          embedMs: timings.embedMs,
+          retrieveMs: timings.retrieveMs,
+        },
+      };
+    }
+
+    const t = performance.now();
+    const { rerank } = await import('./rerank');
+    const reranked = await rerank(query, candidates.map((c) => ({ id: c.id, text: c.text })));
+    const rerankMs = performance.now() - t;
+
+    const byIdDense = new Map(candidates.map((c) => [c.id, c]));
+    const finalResults = reranked
+      .map((r, i) => {
+        const doc = byIdDense.get(r.id);
+        return doc ? { ...doc, score: r.rerankerScore, rank: i + 1 } : null;
+      })
+      .filter((x): x is RetrievalResult => x !== null)
+      .slice(0, k);
+
+    return {
+      mode,
+      results: finalResults,
+      latency: {
+        totalMs: performance.now() - startTotal,
+        embedMs: timings.embedMs,
+        retrieveMs: timings.retrieveMs,
+        rerankMs,
       },
     };
   }
@@ -97,11 +151,7 @@ export async function runRetrieval(
 
   // mode === 'fused-rerank'
 
-  // On Vercel the @huggingface/transformers + onnxruntime-node bundle
-  // typically blows the 50 MB function size limit. Fall back to fused.
-  // The eval table (run locally) is the artifact that proves the rerank
-  // lift; the deploy is supporting material.
-  if (process.env.VERCEL && process.env.RERANK_IN_PROD !== '1') {
+  if (skipRerank()) {
     return {
       mode,
       results: fusedDocs.slice(0, k),
@@ -147,4 +197,4 @@ export async function runRetrieval(
   };
 }
 
-export const ALL_MODES: RetrievalMode[] = ['bm25', 'dense', 'fused', 'fused-rerank'];
+export const ALL_MODES: RetrievalMode[] = ['bm25', 'dense', 'fused', 'fused-rerank', 'dense-rerank'];

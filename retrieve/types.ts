@@ -11,4 +11,12 @@ export type RetrievalResult = {
   rank: number;
 };
 
-export type RetrievalMode = 'bm25' | 'dense' | 'fused' | 'fused-rerank';
+/**
+ * `dense-rerank` exists because the README recommends it.
+ *
+ * The eval measured bm25, dense, fused and fused+rerank, concluded that BM25
+ * fusion is a net negative on this corpus, and told the reader the right stack
+ * is dense + rerank — a configuration that was never run. This adds it, so the
+ * recommendation is a measurement instead of an inference.
+ */
+export type RetrievalMode = 'bm25' | 'dense' | 'fused' | 'fused-rerank' | 'dense-rerank';

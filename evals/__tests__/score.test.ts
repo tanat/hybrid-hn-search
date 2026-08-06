@@ -46,6 +46,20 @@ describe('score', () => {
     expect(mrr([10, 11, 12, 13], gold)).toBeCloseTo(1 / 3, 10);
   });
 
+  it('returns null, not zero, for a query with nothing relevant', () => {
+    // Averaging a zero in for a query nobody could score on made the corpus
+    // look harder than it is and dragged every mode down equally.
+    const noRelevant = new Map<number, number>([[1, 1], [2, 0]]);
+    expect(recallAtK([1, 2], noRelevant, 5)).toBeNull();
+    expect(mrr([1, 2], noRelevant)).toBeNull();
+  });
+
+  it('still returns zero when relevant items exist and none were found', () => {
+    const gold = new Map<number, number>([[1, 3]]);
+    expect(recallAtK([9, 8], gold, 5)).toBe(0);
+    expect(mrr([9, 8], gold)).toBe(0);
+  });
+
   it('mrr returns 0 when no relevant in retrieved', () => {
     const gold = new Map<number, number>([[1, 3]]);
     expect(mrr([2, 3, 4], gold)).toBe(0);
@@ -63,12 +77,14 @@ describe('score', () => {
     expect(recallAtK([1, 2, 9, 8, 7], gold, 5)).toBeCloseTo(0.5, 10);
   });
 
-  it('recallAtK: returns 0 when no items judged ≥ 2', () => {
+  it('recallAtK: has no value when no item is judged relevant', () => {
+    // Previously 0. A query with no right answer cannot be scored, and a zero
+    // in the average is a claim that every mode failed at it.
     const gold = new Map<number, number>([
       [1, 0],
       [2, 1],
     ]);
-    expect(recallAtK([1, 2], gold, 5)).toBe(0);
+    expect(recallAtK([1, 2], gold, 5)).toBeNull();
   });
 
   it('ndcg only counts top-k', () => {

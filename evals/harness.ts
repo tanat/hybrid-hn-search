@@ -3,7 +3,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { runRetrieval, ALL_MODES } from '../retrieve/modes';
 import { db } from '../db/client';
-import { ndcg, recallAtK, mrr } from './score';
+import { ndcg, recallAtK, mrr, relevantIds } from './score';
+import { pairedBootstrap, recallCeiling, mean as meanOf } from './stats';
 import type { Grade } from './grades-store';
 import type { RetrievalMode } from '../retrieve/types';
 
@@ -74,6 +75,18 @@ async function main() {
 
   const corpusSize = (await db<{ c: number }[]>`SELECT COUNT(*)::int AS c FROM comments`)[0].c;
 
+  // Per-query scores, kept aligned across modes so the comparison between two
+  // modes can be paired. Only aggregates used to be stored, which meant no
+  // significance test was possible even after the fact — the data needed to ask
+  // whether a gap was real was thrown away at the end of every run.
+  type QueryRow = {
+    query: string;
+    relevantCount: number;
+    recallCeiling: number | null;
+    byMode: Record<RetrievalMode, { ndcg: number; recall: number | null; mrr: number | null; latencyMs: number }>;
+  };
+  const perQuery: QueryRow[] = [];
+
   const perMode: Record<RetrievalMode, {
     ndcgs: number[];
     recalls: number[];
@@ -84,6 +97,7 @@ async function main() {
     dense: { ndcgs: [], recalls: [], mrrs: [], latencies: [] },
     fused: { ndcgs: [], recalls: [], mrrs: [], latencies: [] },
     'fused-rerank': { ndcgs: [], recalls: [], mrrs: [], latencies: [] },
+    'dense-rerank': { ndcgs: [], recalls: [], mrrs: [], latencies: [] },
   };
 
   // Optional warm-up: run 'fused-rerank' on the first query once to load the model.
@@ -102,6 +116,14 @@ async function main() {
       console.warn(`  ! no grades for query "${q}"; skipping`);
       continue;
     }
+    const relevantCount = relevantIds(gold).size;
+    const row: QueryRow = {
+      query: q,
+      relevantCount,
+      recallCeiling: recallCeiling(relevantCount, K_FOR_RECALL),
+      byMode: {} as QueryRow['byMode'],
+    };
+
     for (const mode of ALL_MODES) {
       const runs: number[] = [];
       let lastIds: number[] = [];
@@ -110,11 +132,19 @@ async function main() {
         runs.push(run.latency.totalMs);
         lastIds = run.results.map((r) => r.id);
       }
-      perMode[mode].ndcgs.push(ndcg(lastIds, gold, K_FOR_METRICS));
-      perMode[mode].recalls.push(recallAtK(lastIds, gold, K_FOR_RECALL));
-      perMode[mode].mrrs.push(mrr(lastIds, gold));
+      const n = ndcg(lastIds, gold, K_FOR_METRICS);
+      const r = recallAtK(lastIds, gold, K_FOR_RECALL);
+      const m = mrr(lastIds, gold);
+
+      row.byMode[mode] = { ndcg: n, recall: r, mrr: m, latencyMs: median(runs) };
+      perMode[mode].ndcgs.push(n);
+      // A query with no relevant item measures nothing; it is left out of the
+      // denominator rather than averaged in as a zero.
+      if (r != null) perMode[mode].recalls.push(r);
+      if (m != null) perMode[mode].mrrs.push(m);
       perMode[mode].latencies.push(median(runs));
     }
+    perQuery.push(row);
     console.log(`  ✓ "${q}"`);
   }
 
@@ -130,6 +160,54 @@ async function main() {
     };
   }
 
+  // Every mode against every other, paired on the query, on all three metrics.
+  // Comparing only nDCG would leave the recall and MRR claims exactly as
+  // unsupported as the nDCG one used to be — and the answer turns out to differ
+  // by metric, which is the finding.
+  type MetricKey = 'ndcg' | 'recall' | 'mrr';
+  const METRICS: MetricKey[] = ['ndcg', 'recall', 'mrr'];
+
+  const comparisons: Record<string, Record<string, ReturnType<typeof pairedBootstrap>>> = {};
+  for (const metric of METRICS) {
+    comparisons[metric] = {};
+    // Queries with no relevant item score null on recall and MRR for every
+    // mode, so dropping them keeps the pairing aligned.
+    const rows = perQuery.filter((r) => r.byMode[ALL_MODES[0]][metric] != null);
+    for (let i = 0; i < ALL_MODES.length; i++) {
+      for (let j = i + 1; j < ALL_MODES.length; j++) {
+        const a = ALL_MODES[i];
+        const b = ALL_MODES[j];
+        comparisons[metric][`${modeKey(a)}_vs_${modeKey(b)}`] = pairedBootstrap(
+          rows.map((r) => r.byMode[a][metric] as number),
+          rows.map((r) => r.byMode[b][metric] as number),
+        );
+      }
+    }
+  }
+
+  const METRIC_LABEL: Record<MetricKey, string> = {
+    ndcg: 'nDCG@10',
+    recall: `recall@${K_FOR_RECALL}`,
+    mrr: 'MRR',
+  };
+  for (const metric of METRICS) {
+    const n = Object.values(comparisons[metric])[0]?.n ?? 0;
+    console.log(`\nPaired bootstrap on ${METRIC_LABEL[metric]} (10k resamples, n=${n} queries):`);
+    for (const [name, c] of Object.entries(comparisons[metric])) {
+      const verdict = c.significant ? 'significant' : 'NOT distinguishable';
+      console.log(
+        `  ${name.padEnd(28)} Δ=${c.meanDifference >= 0 ? '+' : ''}${c.meanDifference.toFixed(3)} ` +
+          `95% CI [${c.low.toFixed(3)}, ${c.high.toFixed(3)}] p=${c.pValue.toFixed(3)}  ${verdict}`,
+      );
+    }
+  }
+
+  const ceilings = perQuery.map((r) => r.recallCeiling).filter((c): c is number => c != null);
+  console.log(
+    `\nrecall@${K_FOR_RECALL} ceiling: mean ${meanOf(ceilings).toFixed(3)} ` +
+      `(a query with ${Math.round(meanOf(perQuery.map((r) => r.relevantCount)))} relevant comments caps every mode).`,
+  );
+
   const row = {
     runId: new Date().toISOString(),
     schemaVersion: SCHEMA_VERSION,
@@ -140,6 +218,12 @@ async function main() {
     gradingProvenance,
     gradeCounts: graderCounts,
     perMode: aggregate,
+    // Kept so any future question about significance can be answered from the
+    // stored row instead of paying for another sweep.
+    perQuery,
+    comparisons,
+    recallCeilingMean: meanOf(ceilings),
+    queriesWithNoRelevant: perQuery.filter((r) => r.relevantCount === 0).length,
   };
 
   // Append-only history.
@@ -162,7 +246,9 @@ async function main() {
 }
 
 function modeKey(mode: RetrievalMode): string {
-  return mode === 'fused-rerank' ? 'fusedRerank' : mode;
+  if (mode === 'fused-rerank') return 'fusedRerank';
+  if (mode === 'dense-rerank') return 'denseRerank';
+  return mode;
 }
 
 function round3(n: number): number {

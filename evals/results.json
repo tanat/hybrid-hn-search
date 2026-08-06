@@ -166,5 +166,3733 @@
         "p95LatencyMs": 870
       }
     }
+  },
+  {
+    "runId": "2026-08-06T20:25:22.549Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.081,
+        "mrr": 0.351,
+        "p50LatencyMs": 6,
+        "p95LatencyMs": 7
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.29,
+        "mrr": 0.681,
+        "p50LatencyMs": 534,
+        "p95LatencyMs": 639
+      },
+      "fused": {
+        "ndcg10": 0.365,
+        "recall5": 0.295,
+        "mrr": 0.572,
+        "p50LatencyMs": 549,
+        "p95LatencyMs": 783
+      },
+      "fusedRerank": {
+        "ndcg10": 0.422,
+        "recall5": 0.351,
+        "mrr": 0.671,
+        "p50LatencyMs": 716,
+        "p95LatencyMs": 834
+      }
+    },
+    "perQuery": [
+      {
+        "query": "postgres performance tuning",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 5.113832999999886
+          },
+          "dense": {
+            "ndcg": 0.32703966649239957,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 578.8206250000003
+          },
+          "fused": {
+            "ndcg": 0.2826335043946801,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 519.0715420000006
+          },
+          "fused-rerank": {
+            "ndcg": 0.21398626473452756,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 626.0776249999999
+          }
+        }
+      },
+      {
+        "query": "rust memory safety",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.17684303433178306,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 6.520958999999493
+          },
+          "dense": {
+            "ndcg": 0.3969558832055104,
+            "recall": 0.2,
+            "mrr": 0.5,
+            "latencyMs": 621.8580000000002
+          },
+          "fused": {
+            "ndcg": 0.2540843892314765,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 571.6470840000002
+          },
+          "fused-rerank": {
+            "ndcg": 0.6262883048538594,
+            "recall": 0.6,
+            "mrr": 1,
+            "latencyMs": 769.5480419999985
+          }
+        }
+      },
+      {
+        "query": "kubernetes deployment scaling",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.44629200000054
+          },
+          "dense": {
+            "ndcg": 0.4061660540594505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 647.1760830000003
+          },
+          "fused": {
+            "ndcg": 0.2940179652096761,
+            "recall": 0.5,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 783.2333330000001
+          },
+          "fused-rerank": {
+            "ndcg": 0.5111085043474587,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 707.7678329999981
+          }
+        }
+      },
+      {
+        "query": "llm inference optimization",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.040533906742505496,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.348999999998341
+          },
+          "dense": {
+            "ndcg": 0.21638356257252422,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 524.3878330000007
+          },
+          "fused": {
+            "ndcg": 0.08406849567422651,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 534.0716659999998
+          },
+          "fused-rerank": {
+            "ndcg": 0.1321493971810079,
+            "recall": 0.125,
+            "mrr": 0.5,
+            "latencyMs": 726.5765829999982
+          }
+        }
+      },
+      {
+        "query": "open source business model",
+        "relevantCount": 12,
+        "recallCeiling": 0.4166666666666667,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5118661886234599,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 6.596958000001905
+          },
+          "dense": {
+            "ndcg": 0.751574110798291,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 612.1659580000014
+          },
+          "fused": {
+            "ndcg": 0.6252864130293223,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 562.1611249999987
+          },
+          "fused-rerank": {
+            "ndcg": 0.5835315657253425,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 790.4638749999976
+          }
+        }
+      },
+      {
+        "query": "typescript type system tricks",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07307367417534505,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.19945799999914
+          },
+          "dense": {
+            "ndcg": 0.6615613787411281,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 494.723917000003
+          },
+          "fused": {
+            "ndcg": 0.4209031750477876,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 569.2307500000024
+          },
+          "fused-rerank": {
+            "ndcg": 0.5268078441704505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 1156.6348339999968
+          }
+        }
+      },
+      {
+        "query": "database index design",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.635708000001614
+          },
+          "dense": {
+            "ndcg": 0.9260446319296772,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 531.1494999999995
+          },
+          "fused": {
+            "ndcg": 0.8391657063511034,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 588.6221250000017
+          },
+          "fused-rerank": {
+            "ndcg": 0.8466910790763054,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 711.0402919999979
+          }
+        }
+      },
+      {
+        "query": "react server components",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.04434774260160817,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.3307500000009895
+          },
+          "dense": {
+            "ndcg": 0.43204785429873127,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 540.2298749999973
+          },
+          "fused": {
+            "ndcg": 0.3325374698680232,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 458.8100410000043
+          },
+          "fused-rerank": {
+            "ndcg": 0.4120691123921037,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 641.1615420000016
+          }
+        }
+      },
+      {
+        "query": "why do startups fail at scale",
+        "relevantCount": 13,
+        "recallCeiling": 0.38461538461538464,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.1343077246888793,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 5.863916000002064
+          },
+          "dense": {
+            "ndcg": 0.495892029658403,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 570.9537080000009
+          },
+          "fused": {
+            "ndcg": 0.4724898796428127,
+            "recall": 0.23076923076923078,
+            "mrr": 0.5,
+            "latencyMs": 487.747749999995
+          },
+          "fused-rerank": {
+            "ndcg": 0.4774402482142253,
+            "recall": 0.23076923076923078,
+            "mrr": 1,
+            "latencyMs": 752.7655840000007
+          }
+        }
+      },
+      {
+        "query": "how does garbage collection work",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.488625000005413
+          },
+          "dense": {
+            "ndcg": 0.6575279073696869,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 502.41525000000547
+          },
+          "fused": {
+            "ndcg": 0.5684531923030289,
+            "recall": 1,
+            "mrr": 0.25,
+            "latencyMs": 551.2562079999989
+          },
+          "fused-rerank": {
+            "ndcg": 0.634160219686138,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 688.398874999999
+          }
+        }
+      },
+      {
+        "query": "why is software estimation so hard",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07242488707933796,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 5.847583000002487
+          },
+          "dense": {
+            "ndcg": 0.2136501735611006,
+            "recall": 0.09090909090909091,
+            "mrr": 0.25,
+            "latencyMs": 530.3056660000002
+          },
+          "fused": {
+            "ndcg": 0.13413642197015335,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 681.2619580000028
+          },
+          "fused-rerank": {
+            "ndcg": 0.2690841736674746,
+            "recall": 0.18181818181818182,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 823.121959000011
+          }
+        }
+      },
+      {
+        "query": "when should you use microservices",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.112374999996973
+          },
+          "dense": {
+            "ndcg": 0.5338638927306175,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 534.2269579999993
+          },
+          "fused": {
+            "ndcg": 0.3047813445164083,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 526.2910419999971
+          },
+          "fused-rerank": {
+            "ndcg": 0.48306700197788277,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 750.3052080000052
+          }
+        }
+      },
+      {
+        "query": "why do programmers prefer Linux",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.33292682443469007,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 4.436584000010043
+          },
+          "dense": {
+            "ndcg": 0.586528117628651,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 524.452541000006
+          },
+          "fused": {
+            "ndcg": 0.4759055381069723,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 548.0815000000002
+          },
+          "fused-rerank": {
+            "ndcg": 0.3527175689944208,
+            "recall": 0.3333333333333333,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 659.4563749999943
+          }
+        }
+      },
+      {
+        "query": "how do you handle distributed transactions",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.7722499999945285
+          },
+          "dense": {
+            "ndcg": 0.8903894887369824,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 496.39187500000116
+          },
+          "fused": {
+            "ndcg": 0.5370089132348235,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 509.3555000000051
+          },
+          "fused-rerank": {
+            "ndcg": 0.6119528921531397,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 723.9170410000079
+          }
+        }
+      },
+      {
+        "query": "why is hiring senior engineers difficult",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.09433571616937413,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.521291999990353
+          },
+          "dense": {
+            "ndcg": 0.3520767664167051,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 532.0265409999993
+          },
+          "fused": {
+            "ndcg": 0.08422371036225003,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 514.5929999999935
+          },
+          "fused-rerank": {
+            "ndcg": 0.13055057065785697,
+            "recall": 0,
+            "mrr": 0.125,
+            "latencyMs": 738.7358749999985
+          }
+        }
+      },
+      {
+        "query": "what makes a good code review",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.4711266152428237,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 6.347000000008848
+          },
+          "dense": {
+            "ndcg": 0.8125803249542112,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 544.5114170000015
+          },
+          "fused": {
+            "ndcg": 0.5532458034219105,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 812.2982500000071
+          },
+          "fused-rerank": {
+            "ndcg": 0.7198264484266397,
+            "recall": 0.6666666666666666,
+            "mrr": 1,
+            "latencyMs": 834.2289999999921
+          }
+        }
+      },
+      {
+        "query": "technical debt as career risk",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.10701743917785497,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.247709000002942
+          },
+          "dense": {
+            "ndcg": 0.397441634563817,
+            "recall": 0.2,
+            "mrr": 0.2,
+            "latencyMs": 571.356375000003
+          },
+          "fused": {
+            "ndcg": 0.3474930046735553,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 539.4473339999968
+          },
+          "fused-rerank": {
+            "ndcg": 0.3420676488877998,
+            "recall": 0.2,
+            "mrr": 0.25,
+            "latencyMs": 678.9607499999984
+          }
+        }
+      },
+      {
+        "query": "the cost of software abstractions",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.26970622818303025,
+            "recall": 0.18181818181818182,
+            "mrr": 0.5,
+            "latencyMs": 5.619958000010229
+          },
+          "dense": {
+            "ndcg": 0.48028266523906366,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 449.29266700000153
+          },
+          "fused": {
+            "ndcg": 0.34631145536834074,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 458.6024999999936
+          },
+          "fused-rerank": {
+            "ndcg": 0.16482718830820842,
+            "recall": 0.18181818181818182,
+            "mrr": 0.25,
+            "latencyMs": 809.4410000000062
+          }
+        }
+      },
+      {
+        "query": "engineering culture and productivity",
+        "relevantCount": 31,
+        "recallCeiling": 0.16129032258064516,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5081903824276001,
+            "recall": 0.0967741935483871,
+            "mrr": 0.5,
+            "latencyMs": 4.757082999989507
+          },
+          "dense": {
+            "ndcg": 0.8577666702728031,
+            "recall": 0.16129032258064516,
+            "mrr": 1,
+            "latencyMs": 531.6733749999985
+          },
+          "fused": {
+            "ndcg": 0.8305658395084461,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 523.4145420000132
+          },
+          "fused-rerank": {
+            "ndcg": 0.5663074998581882,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 713.3141659999965
+          }
+        }
+      },
+      {
+        "query": "complexity as the root of all software problems",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.48675331299064106,
+            "recall": 0.07407407407407407,
+            "mrr": 1,
+            "latencyMs": 7.271542000002228
+          },
+          "dense": {
+            "ndcg": 0.8537662720095992,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 518.7779999999912
+          },
+          "fused": {
+            "ndcg": 0.6566361284727589,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 574.056917000009
+          },
+          "fused-rerank": {
+            "ndcg": 0.7281793842536286,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 762.0573749999894
+          }
+        }
+      },
+      {
+        "query": "open source sustainability",
+        "relevantCount": 22,
+        "recallCeiling": 0.22727272727272727,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.37599810959488245,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 4.503582999997889
+          },
+          "dense": {
+            "ndcg": 0.6281299104392378,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 416.5375420000055
+          },
+          "fused": {
+            "ndcg": 0.6631272753284257,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 559.746708000006
+          },
+          "fused-rerank": {
+            "ndcg": 0.6061073118080311,
+            "recall": 0.22727272727272727,
+            "mrr": 1,
+            "latencyMs": 673.9101660000015
+          }
+        }
+      },
+      {
+        "query": "AI replacing software developers",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.27893543971052465,
+            "recall": 0.037037037037037035,
+            "mrr": 0.2,
+            "latencyMs": 5.047334000002593
+          },
+          "dense": {
+            "ndcg": 0.8113499146016456,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 595.6740830000053
+          },
+          "fused": {
+            "ndcg": 0.64268059475173,
+            "recall": 0.14814814814814814,
+            "mrr": 0.5,
+            "latencyMs": 524.10216699999
+          },
+          "fused-rerank": {
+            "ndcg": 0.8850925664646847,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 676.583541999993
+          }
+        }
+      },
+      {
+        "query": "remote work and software teams",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.20262822952728438,
+            "recall": 0.125,
+            "mrr": 1,
+            "latencyMs": 5.526250000009895
+          },
+          "dense": {
+            "ndcg": 0.3479168239402767,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 541.7297079999989
+          },
+          "fused": {
+            "ndcg": 0.24299089934828338,
+            "recall": 0.25,
+            "mrr": 0.5,
+            "latencyMs": 578.2974590000085
+          },
+          "fused-rerank": {
+            "ndcg": 0.33713752659288415,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 788.4269159999967
+          }
+        }
+      },
+      {
+        "query": "rewriting versus refactoring legacy systems",
+        "relevantCount": 10,
+        "recallCeiling": 0.5,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.12927277175929244,
+            "recall": 0.1,
+            "mrr": 0.25,
+            "latencyMs": 6.228625000017928
+          },
+          "dense": {
+            "ndcg": 0.47353135092811804,
+            "recall": 0.3,
+            "mrr": 1,
+            "latencyMs": 486.4781249999942
+          },
+          "fused": {
+            "ndcg": 0.38741304858474734,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 617.9552499999991
+          },
+          "fused-rerank": {
+            "ndcg": 0.40181497177857833,
+            "recall": 0.3,
+            "mrr": 0.5,
+            "latencyMs": 712.6573750000098
+          }
+        }
+      },
+      {
+        "query": "what is V8 hidden classes",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 5.116416000004392
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 501.0800839999865
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 535.6897080000199
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 677.4419170000183
+          }
+        }
+      },
+      {
+        "query": "how does consistent hashing work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 7.344708999997238
+          },
+          "dense": {
+            "ndcg": 0.3010299956639812,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 531.2157909999951
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 543.1590410000063
+          },
+          "fused-rerank": {
+            "ndcg": 0.5,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 791.0507499999949
+          }
+        }
+      },
+      {
+        "query": "what is the CAP theorem",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.043375000008382
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 550.9474170000176
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 572.3479999999981
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 706.5730829999957
+          }
+        }
+      },
+      {
+        "query": "how does Raft consensus work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 6.245166000007885
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 564.7751249999856
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 466.8501249999972
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 633.8303330000199
+          }
+        }
+      },
+      {
+        "query": "what is copy-on-write in Linux",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 6.631874999991851
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 639.4213329999766
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 549.2018749999988
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 716.1246669999964
+          }
+        }
+      },
+      {
+        "query": "how does TLS handshake work",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 6.826832999999169
+          },
+          "dense": {
+            "ndcg": 0.6671714049117464,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 635.5305419999931
+          },
+          "fused": {
+            "ndcg": 0.5574480986113458,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 553.7774579999968
+          },
+          "fused-rerank": {
+            "ndcg": 0.5844153148080933,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 711.2800419999985
+          }
+        }
+      }
+    ],
+    "comparisons": {
+      "bm25_vs_dense": {
+        "meanDifference": -0.3389460086087814,
+        "low": -0.42288040017097384,
+        "high": -0.2582190415237796,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "bm25_vs_fused": {
+        "meanDifference": -0.22091066798504574,
+        "low": -0.2963700242170412,
+        "high": -0.15008423527689221,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "bm25_vs_fusedRerank": {
+        "meanDifference": -0.2779030793852671,
+        "low": -0.3635635445147452,
+        "high": -0.1948995845692664,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "dense_vs_fused": {
+        "meanDifference": 0.11803534062373565,
+        "low": 0.08433832427831603,
+        "high": 0.15267077487045733,
+        "pPositive": 1,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "dense_vs_fusedRerank": {
+        "meanDifference": 0.06104292922351429,
+        "low": 0.01579698512954791,
+        "high": 0.10686798750658183,
+        "pPositive": 0.9958,
+        "pValue": 0.008399999999999963,
+        "significant": true,
+        "n": 30
+      },
+      "fused_vs_fusedRerank": {
+        "meanDifference": -0.05699241140022138,
+        "low": -0.1108834759297363,
+        "high": -0.005315948990078761,
+        "pPositive": 0.0143,
+        "pValue": 0.0286,
+        "significant": true,
+        "n": 30
+      }
+    },
+    "recallCeilingMean": 0.696637765858196,
+    "queriesWithNoRelevant": 6
+  },
+  {
+    "runId": "2026-08-06T20:33:41.555Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.081,
+        "mrr": 0.351,
+        "p50LatencyMs": 9,
+        "p95LatencyMs": 32
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.29,
+        "mrr": 0.681,
+        "p50LatencyMs": 567,
+        "p95LatencyMs": 691
+      },
+      "fused": {
+        "ndcg10": 0.365,
+        "recall5": 0.295,
+        "mrr": 0.572,
+        "p50LatencyMs": 534,
+        "p95LatencyMs": 699
+      },
+      "fusedRerank": {
+        "ndcg10": 0.422,
+        "recall5": 0.351,
+        "mrr": 0.671,
+        "p50LatencyMs": 933,
+        "p95LatencyMs": 7490
+      },
+      "denseRerank": {
+        "ndcg10": 0.458,
+        "recall5": 0.326,
+        "mrr": 0.706,
+        "p50LatencyMs": 768,
+        "p95LatencyMs": 9662
+      }
+    },
+    "perQuery": [
+      {
+        "query": "postgres performance tuning",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.786207999999988
+          },
+          "dense": {
+            "ndcg": 0.32703966649239957,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 628.178958
+          },
+          "fused": {
+            "ndcg": 0.2826335043946801,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 506.4977079999999
+          },
+          "fused-rerank": {
+            "ndcg": 0.21398626473452756,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 763.1001660000002
+          },
+          "dense-rerank": {
+            "ndcg": 0.1208113026994942,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 708.4344590000001
+          }
+        }
+      },
+      {
+        "query": "rust memory safety",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.17684303433178306,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 5.363750000000437
+          },
+          "dense": {
+            "ndcg": 0.3969558832055104,
+            "recall": 0.2,
+            "mrr": 0.5,
+            "latencyMs": 567.3126670000001
+          },
+          "fused": {
+            "ndcg": 0.2540843892314765,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 476.2781670000004
+          },
+          "fused-rerank": {
+            "ndcg": 0.6262883048538594,
+            "recall": 0.6,
+            "mrr": 1,
+            "latencyMs": 751.3284169999988
+          },
+          "dense-rerank": {
+            "ndcg": 0.6017361091287485,
+            "recall": 0.4,
+            "mrr": 1,
+            "latencyMs": 674.6082920000008
+          }
+        }
+      },
+      {
+        "query": "kubernetes deployment scaling",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 6.485791999999492
+          },
+          "dense": {
+            "ndcg": 0.4061660540594505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 577.9713340000017
+          },
+          "fused": {
+            "ndcg": 0.2940179652096761,
+            "recall": 0.5,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 715.304541999998
+          },
+          "fused-rerank": {
+            "ndcg": 0.5111085043474587,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 1013.395790999999
+          },
+          "dense-rerank": {
+            "ndcg": 0.5529453255648678,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 768.3778749999983
+          }
+        }
+      },
+      {
+        "query": "llm inference optimization",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.040533906742505496,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 7.217249999997875
+          },
+          "dense": {
+            "ndcg": 0.21638356257252422,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 568.6494160000002
+          },
+          "fused": {
+            "ndcg": 0.08406849567422651,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 516.0276660000018
+          },
+          "fused-rerank": {
+            "ndcg": 0.1321493971810079,
+            "recall": 0.125,
+            "mrr": 0.5,
+            "latencyMs": 919.2795830000032
+          },
+          "dense-rerank": {
+            "ndcg": 0.1321493971810079,
+            "recall": 0.125,
+            "mrr": 0.5,
+            "latencyMs": 860.8749160000007
+          }
+        }
+      },
+      {
+        "query": "open source business model",
+        "relevantCount": 12,
+        "recallCeiling": 0.4166666666666667,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5118661886234599,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 8.631084000000556
+          },
+          "dense": {
+            "ndcg": 0.751574110798291,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 631.2800839999982
+          },
+          "fused": {
+            "ndcg": 0.6252864130293223,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 563.9489170000015
+          },
+          "fused-rerank": {
+            "ndcg": 0.5835315657253425,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 1321.8320419999945
+          },
+          "dense-rerank": {
+            "ndcg": 0.5538625330677265,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 765.583749999998
+          }
+        }
+      },
+      {
+        "query": "typescript type system tricks",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07307367417534505,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 8.373749999998836
+          },
+          "dense": {
+            "ndcg": 0.6615613787411281,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 449.0043330000044
+          },
+          "fused": {
+            "ndcg": 0.4209031750477876,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 528.4420840000021
+          },
+          "fused-rerank": {
+            "ndcg": 0.5268078441704505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 942.0260000000053
+          },
+          "dense-rerank": {
+            "ndcg": 0.6609549324729168,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 699.4275000000052
+          }
+        }
+      },
+      {
+        "query": "database index design",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 6.919208999999682
+          },
+          "dense": {
+            "ndcg": 0.9260446319296772,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 471.21220899999753
+          },
+          "fused": {
+            "ndcg": 0.8391657063511034,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 485.4183750000011
+          },
+          "fused-rerank": {
+            "ndcg": 0.8466910790763054,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 932.6912089999969
+          },
+          "dense-rerank": {
+            "ndcg": 0.8466910790763054,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 759.6539580000099
+          }
+        }
+      },
+      {
+        "query": "react server components",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.04434774260160817,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 7.993084000001545
+          },
+          "dense": {
+            "ndcg": 0.43204785429873127,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 559.7971249999973
+          },
+          "fused": {
+            "ndcg": 0.3325374698680232,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 523.0821250000008
+          },
+          "fused-rerank": {
+            "ndcg": 0.4120691123921037,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 1214.8232500000013
+          },
+          "dense-rerank": {
+            "ndcg": 0.41014864921468747,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 768.0579579999903
+          }
+        }
+      },
+      {
+        "query": "why do startups fail at scale",
+        "relevantCount": 13,
+        "recallCeiling": 0.38461538461538464,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.1343077246888793,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 31.77879199999734
+          },
+          "dense": {
+            "ndcg": 0.495892029658403,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 568.3480839999975
+          },
+          "fused": {
+            "ndcg": 0.4724898796428127,
+            "recall": 0.23076923076923078,
+            "mrr": 0.5,
+            "latencyMs": 548.2647909999941
+          },
+          "fused-rerank": {
+            "ndcg": 0.4774402482142253,
+            "recall": 0.23076923076923078,
+            "mrr": 1,
+            "latencyMs": 812.4385829999956
+          },
+          "dense-rerank": {
+            "ndcg": 0.46905689485382923,
+            "recall": 0.23076923076923078,
+            "mrr": 1,
+            "latencyMs": 904.4441250000091
+          }
+        }
+      },
+      {
+        "query": "how does garbage collection work",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 9.410916999986512
+          },
+          "dense": {
+            "ndcg": 0.6575279073696869,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 604.912083999996
+          },
+          "fused": {
+            "ndcg": 0.5684531923030289,
+            "recall": 1,
+            "mrr": 0.25,
+            "latencyMs": 550.3914159999986
+          },
+          "fused-rerank": {
+            "ndcg": 0.634160219686138,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 842.8475420000032
+          },
+          "dense-rerank": {
+            "ndcg": 0.634160219686138,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 726.6893750000017
+          }
+        }
+      },
+      {
+        "query": "why is software estimation so hard",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07242488707933796,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 9.516499999997905
+          },
+          "dense": {
+            "ndcg": 0.2136501735611006,
+            "recall": 0.09090909090909091,
+            "mrr": 0.25,
+            "latencyMs": 537.2412079999922
+          },
+          "fused": {
+            "ndcg": 0.13413642197015335,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 562.7800829999906
+          },
+          "fused-rerank": {
+            "ndcg": 0.2690841736674746,
+            "recall": 0.18181818181818182,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 1025.218709000008
+          },
+          "dense-rerank": {
+            "ndcg": 0.33451024811741975,
+            "recall": 0.18181818181818182,
+            "mrr": 0.5,
+            "latencyMs": 802.2304160000058
+          }
+        }
+      },
+      {
+        "query": "when should you use microservices",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 11.528667000005953
+          },
+          "dense": {
+            "ndcg": 0.5338638927306175,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 532.986625000005
+          },
+          "fused": {
+            "ndcg": 0.3047813445164083,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 525.5517919999984
+          },
+          "fused-rerank": {
+            "ndcg": 0.48306700197788277,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 1226.7269170000072
+          },
+          "dense-rerank": {
+            "ndcg": 0.5296128949867626,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 865.6512090000033
+          }
+        }
+      },
+      {
+        "query": "why do programmers prefer Linux",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.33292682443469007,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 17.782582999992883
+          },
+          "dense": {
+            "ndcg": 0.586528117628651,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 552.6562919999997
+          },
+          "fused": {
+            "ndcg": 0.4759055381069723,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 515.5405829999945
+          },
+          "fused-rerank": {
+            "ndcg": 0.3527175689944208,
+            "recall": 0.3333333333333333,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 1056.0963750000083
+          },
+          "dense-rerank": {
+            "ndcg": 0.45785724914146714,
+            "recall": 0.16666666666666666,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 791.103833000001
+          }
+        }
+      },
+      {
+        "query": "how do you handle distributed transactions",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 9.920957999987877
+          },
+          "dense": {
+            "ndcg": 0.8903894887369824,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 564.3139170000068
+          },
+          "fused": {
+            "ndcg": 0.5370089132348235,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 543.1046249999927
+          },
+          "fused-rerank": {
+            "ndcg": 0.6119528921531397,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 1457.7822500000038
+          },
+          "dense-rerank": {
+            "ndcg": 0.6119528921531397,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 1387.4623339999816
+          }
+        }
+      },
+      {
+        "query": "why is hiring senior engineers difficult",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.09433571616937413,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 12.43812499998603
+          },
+          "dense": {
+            "ndcg": 0.3520767664167051,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 691.1428749999905
+          },
+          "fused": {
+            "ndcg": 0.08422371036225003,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 563.6863330000197
+          },
+          "fused-rerank": {
+            "ndcg": 0.13055057065785697,
+            "recall": 0,
+            "mrr": 0.125,
+            "latencyMs": 1431.6377079999947
+          },
+          "dense-rerank": {
+            "ndcg": 0.2837655906220106,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 1968.6163330000127
+          }
+        }
+      },
+      {
+        "query": "what makes a good code review",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.4711266152428237,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 19.114000000001397
+          },
+          "dense": {
+            "ndcg": 0.8125803249542112,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 595.9265000000014
+          },
+          "fused": {
+            "ndcg": 0.5532458034219105,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 698.5352089999942
+          },
+          "fused-rerank": {
+            "ndcg": 0.7198264484266397,
+            "recall": 0.6666666666666666,
+            "mrr": 1,
+            "latencyMs": 7490.265041000006
+          },
+          "dense-rerank": {
+            "ndcg": 0.7190333763153811,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 9661.953749999986
+          }
+        }
+      },
+      {
+        "query": "technical debt as career risk",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.10701743917785497,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 19.994999999995343
+          },
+          "dense": {
+            "ndcg": 0.397441634563817,
+            "recall": 0.2,
+            "mrr": 0.2,
+            "latencyMs": 751.3849170000176
+          },
+          "fused": {
+            "ndcg": 0.3474930046735553,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 644.7611250000191
+          },
+          "fused-rerank": {
+            "ndcg": 0.3420676488877998,
+            "recall": 0.2,
+            "mrr": 0.25,
+            "latencyMs": 3748.5237079999933
+          },
+          "dense-rerank": {
+            "ndcg": 0.3420676488877998,
+            "recall": 0.2,
+            "mrr": 0.25,
+            "latencyMs": 1129.435833000025
+          }
+        }
+      },
+      {
+        "query": "the cost of software abstractions",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.26970622818303025,
+            "recall": 0.18181818181818182,
+            "mrr": 0.5,
+            "latencyMs": 9.44283300000825
+          },
+          "dense": {
+            "ndcg": 0.48028266523906366,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 494.85758400001214
+          },
+          "fused": {
+            "ndcg": 0.34631145536834074,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 519.3508750000037
+          },
+          "fused-rerank": {
+            "ndcg": 0.16482718830820842,
+            "recall": 0.18181818181818182,
+            "mrr": 0.25,
+            "latencyMs": 724.2089580000029
+          },
+          "dense-rerank": {
+            "ndcg": 0.2490291212131991,
+            "recall": 0.18181818181818182,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 655.0361249999842
+          }
+        }
+      },
+      {
+        "query": "engineering culture and productivity",
+        "relevantCount": 31,
+        "recallCeiling": 0.16129032258064516,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5081903824276001,
+            "recall": 0.0967741935483871,
+            "mrr": 0.5,
+            "latencyMs": 7.328624999994645
+          },
+          "dense": {
+            "ndcg": 0.8577666702728031,
+            "recall": 0.16129032258064516,
+            "mrr": 1,
+            "latencyMs": 620.2631249999977
+          },
+          "fused": {
+            "ndcg": 0.8305658395084461,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 528.700582999998
+          },
+          "fused-rerank": {
+            "ndcg": 0.5663074998581882,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 1426.103541999997
+          },
+          "dense-rerank": {
+            "ndcg": 0.748466552802194,
+            "recall": 0.16129032258064516,
+            "mrr": 1,
+            "latencyMs": 754.568499999994
+          }
+        }
+      },
+      {
+        "query": "complexity as the root of all software problems",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.48675331299064106,
+            "recall": 0.07407407407407407,
+            "mrr": 1,
+            "latencyMs": 11.295458999986295
+          },
+          "dense": {
+            "ndcg": 0.8537662720095992,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 555.6340830000117
+          },
+          "fused": {
+            "ndcg": 0.6566361284727589,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 549.6802090000128
+          },
+          "fused-rerank": {
+            "ndcg": 0.7281793842536286,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 9908.949499999988
+          },
+          "dense-rerank": {
+            "ndcg": 0.8555194130370415,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 19606.919083999994
+          }
+        }
+      },
+      {
+        "query": "open source sustainability",
+        "relevantCount": 22,
+        "recallCeiling": 0.22727272727272727,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.37599810959488245,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 38.40654200001154
+          },
+          "dense": {
+            "ndcg": 0.6281299104392378,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 580.4474589999882
+          },
+          "fused": {
+            "ndcg": 0.6631272753284257,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 521.0077499999898
+          },
+          "fused-rerank": {
+            "ndcg": 0.6061073118080311,
+            "recall": 0.22727272727272727,
+            "mrr": 1,
+            "latencyMs": 758.1543340000208
+          },
+          "dense-rerank": {
+            "ndcg": 0.6511284524781192,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 884.3574160000426
+          }
+        }
+      },
+      {
+        "query": "AI replacing software developers",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.27893543971052465,
+            "recall": 0.037037037037037035,
+            "mrr": 0.2,
+            "latencyMs": 9.422041000041645
+          },
+          "dense": {
+            "ndcg": 0.8113499146016456,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 597.5145410000114
+          },
+          "fused": {
+            "ndcg": 0.64268059475173,
+            "recall": 0.14814814814814814,
+            "mrr": 0.5,
+            "latencyMs": 531.046667000046
+          },
+          "fused-rerank": {
+            "ndcg": 0.8850925664646847,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 837.2701249999809
+          },
+          "dense-rerank": {
+            "ndcg": 0.9155260051911699,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 847.9737919999752
+          }
+        }
+      },
+      {
+        "query": "remote work and software teams",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.20262822952728438,
+            "recall": 0.125,
+            "mrr": 1,
+            "latencyMs": 7.667292000027373
+          },
+          "dense": {
+            "ndcg": 0.3479168239402767,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 617.046250000014
+          },
+          "fused": {
+            "ndcg": 0.24299089934828338,
+            "recall": 0.25,
+            "mrr": 0.5,
+            "latencyMs": 553.6001249999972
+          },
+          "fused-rerank": {
+            "ndcg": 0.33713752659288415,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 713.7702910000226
+          },
+          "dense-rerank": {
+            "ndcg": 0.3886078708918771,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 750.6352080000215
+          }
+        }
+      },
+      {
+        "query": "rewriting versus refactoring legacy systems",
+        "relevantCount": 10,
+        "recallCeiling": 0.5,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.12927277175929244,
+            "recall": 0.1,
+            "mrr": 0.25,
+            "latencyMs": 7.27795800002059
+          },
+          "dense": {
+            "ndcg": 0.47353135092811804,
+            "recall": 0.3,
+            "mrr": 1,
+            "latencyMs": 582.0686250000144
+          },
+          "fused": {
+            "ndcg": 0.38741304858474734,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 513.5279999999912
+          },
+          "fused-rerank": {
+            "ndcg": 0.40181497177857833,
+            "recall": 0.3,
+            "mrr": 0.5,
+            "latencyMs": 1347.00891699997
+          },
+          "dense-rerank": {
+            "ndcg": 0.42632245979603656,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 629.3910419999738
+          }
+        }
+      },
+      {
+        "query": "what is V8 hidden classes",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 6.036542000016198
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 537.4621670000488
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 591.2214579999563
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 684.600167000026
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 652.6537499999977
+          }
+        }
+      },
+      {
+        "query": "how does consistent hashing work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 3.8457089999574237
+          },
+          "dense": {
+            "ndcg": 0.3010299956639812,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 499.8327500000014
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 533.510083000001
+          },
+          "fused-rerank": {
+            "ndcg": 0.5,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 729.9972499999567
+          },
+          "dense-rerank": {
+            "ndcg": 0.6309297535714575,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 614.8015000000014
+          }
+        }
+      },
+      {
+        "query": "what is the CAP theorem",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 2.984082999988459
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 498.53516699996544
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 548.8655840000138
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 657.0051669999957
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 645.63483299996
+          }
+        }
+      },
+      {
+        "query": "how does Raft consensus work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.929915999993682
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 540.4927499999758
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 524.1767499999842
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 787.584124999994
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 713.5872499999823
+          }
+        }
+      },
+      {
+        "query": "what is copy-on-write in Linux",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 9.532209000026342
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 443.56770800001686
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 527.4318339999882
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 754.1212500000256
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 732.336958000029
+          }
+        }
+      },
+      {
+        "query": "how does TLS handshake work",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.36341699998593
+          },
+          "dense": {
+            "ndcg": 0.6671714049117464,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 539.2860840000212
+          },
+          "fused": {
+            "ndcg": 0.5574480986113458,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 553.4248750000261
+          },
+          "fused-rerank": {
+            "ndcg": 0.5844153148080933,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 684.7881669999915
+          },
+          "dense-rerank": {
+            "ndcg": 0.6084861310735535,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 767.5977079999866
+          }
+        }
+      }
+    ],
+    "comparisons": {
+      "bm25_vs_dense": {
+        "meanDifference": -0.3389460086087814,
+        "low": -0.42288040017097384,
+        "high": -0.2582190415237796,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "bm25_vs_fused": {
+        "meanDifference": -0.22091066798504574,
+        "low": -0.2963700242170412,
+        "high": -0.15008423527689221,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "bm25_vs_fusedRerank": {
+        "meanDifference": -0.2779030793852671,
+        "low": -0.3635635445147452,
+        "high": -0.1948995845692664,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "bm25_vs_denseRerank": {
+        "meanDifference": -0.31416812919211445,
+        "low": -0.3988508671744081,
+        "high": -0.2301068821244424,
+        "pPositive": 0,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "dense_vs_fused": {
+        "meanDifference": 0.11803534062373565,
+        "low": 0.08433832427831603,
+        "high": 0.15267077487045733,
+        "pPositive": 1,
+        "pValue": 0,
+        "significant": true,
+        "n": 30
+      },
+      "dense_vs_fusedRerank": {
+        "meanDifference": 0.06104292922351429,
+        "low": 0.01579698512954791,
+        "high": 0.10686798750658183,
+        "pPositive": 0.9958,
+        "pValue": 0.008399999999999963,
+        "significant": true,
+        "n": 30
+      },
+      "dense_vs_denseRerank": {
+        "meanDifference": 0.02477787941666693,
+        "low": -0.019985964172815805,
+        "high": 0.06795483172282836,
+        "pPositive": 0.8636,
+        "pValue": 0.27279999999999993,
+        "significant": false,
+        "n": 30
+      },
+      "fused_vs_fusedRerank": {
+        "meanDifference": -0.05699241140022138,
+        "low": -0.1108834759297363,
+        "high": -0.005315948990078761,
+        "pPositive": 0.0143,
+        "pValue": 0.0286,
+        "significant": true,
+        "n": 30
+      },
+      "fused_vs_denseRerank": {
+        "meanDifference": -0.09325746120706874,
+        "low": -0.15286498312145025,
+        "high": -0.039905019076441645,
+        "pPositive": 0.0004,
+        "pValue": 0.0008,
+        "significant": true,
+        "n": 30
+      },
+      "fusedRerank_vs_denseRerank": {
+        "meanDifference": -0.03626504980684737,
+        "low": -0.05810089367805658,
+        "high": -0.014820592206981535,
+        "pPositive": 0.0002,
+        "pValue": 0.0004,
+        "significant": true,
+        "n": 30
+      }
+    },
+    "recallCeilingMean": 0.696637765858196,
+    "queriesWithNoRelevant": 6
+  },
+  {
+    "runId": "2026-08-06T20:38:35.278Z",
+    "schemaVersion": "v1.0.0",
+    "embeddingModel": "text-embedding-3-small",
+    "rerankModel": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "corpusSize": 4985,
+    "queryCount": 30,
+    "gradingProvenance": "llm:gemini",
+    "gradeCounts": {
+      "llm:gemini": 1670
+    },
+    "perMode": {
+      "bm25": {
+        "ndcg10": 0.144,
+        "recall5": 0.081,
+        "mrr": 0.351,
+        "p50LatencyMs": 5,
+        "p95LatencyMs": 7
+      },
+      "dense": {
+        "ndcg10": 0.483,
+        "recall5": 0.29,
+        "mrr": 0.681,
+        "p50LatencyMs": 548,
+        "p95LatencyMs": 661
+      },
+      "fused": {
+        "ndcg10": 0.365,
+        "recall5": 0.295,
+        "mrr": 0.572,
+        "p50LatencyMs": 545,
+        "p95LatencyMs": 615
+      },
+      "fusedRerank": {
+        "ndcg10": 0.422,
+        "recall5": 0.351,
+        "mrr": 0.671,
+        "p50LatencyMs": 715,
+        "p95LatencyMs": 882
+      },
+      "denseRerank": {
+        "ndcg10": 0.458,
+        "recall5": 0.326,
+        "mrr": 0.706,
+        "p50LatencyMs": 681,
+        "p95LatencyMs": 842
+      }
+    },
+    "perQuery": [
+      {
+        "query": "postgres performance tuning",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 5.400540999999976
+          },
+          "dense": {
+            "ndcg": 0.32703966649239957,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 609.438666
+          },
+          "fused": {
+            "ndcg": 0.2826335043946801,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 588.6499580000009
+          },
+          "fused-rerank": {
+            "ndcg": 0.21398626473452756,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 672.3787499999999
+          },
+          "dense-rerank": {
+            "ndcg": 0.1208113026994942,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 683.9197500000009
+          }
+        }
+      },
+      {
+        "query": "rust memory safety",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.17684303433178306,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 2.8896660000009433
+          },
+          "dense": {
+            "ndcg": 0.3969558832055104,
+            "recall": 0.2,
+            "mrr": 0.5,
+            "latencyMs": 635.7477920000001
+          },
+          "fused": {
+            "ndcg": 0.2540843892314765,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 572.2478339999998
+          },
+          "fused-rerank": {
+            "ndcg": 0.6262883048538594,
+            "recall": 0.6,
+            "mrr": 1,
+            "latencyMs": 754.6522079999995
+          },
+          "dense-rerank": {
+            "ndcg": 0.6017361091287485,
+            "recall": 0.4,
+            "mrr": 1,
+            "latencyMs": 720.8833749999976
+          }
+        }
+      },
+      {
+        "query": "kubernetes deployment scaling",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.5547500000029686
+          },
+          "dense": {
+            "ndcg": 0.4061660540594505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 520.1590840000026
+          },
+          "fused": {
+            "ndcg": 0.2940179652096761,
+            "recall": 0.5,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 531.5790410000009
+          },
+          "fused-rerank": {
+            "ndcg": 0.5111085043474587,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 677.9592919999996
+          },
+          "dense-rerank": {
+            "ndcg": 0.5529453255648678,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 692.0965419999993
+          }
+        }
+      },
+      {
+        "query": "llm inference optimization",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.040533906742505496,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.491708000001381
+          },
+          "dense": {
+            "ndcg": 0.21638356257252422,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 486.6102920000012
+          },
+          "fused": {
+            "ndcg": 0.08406849567422651,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 509.93974999999773
+          },
+          "fused-rerank": {
+            "ndcg": 0.1321493971810079,
+            "recall": 0.125,
+            "mrr": 0.5,
+            "latencyMs": 693.6087090000001
+          },
+          "dense-rerank": {
+            "ndcg": 0.1321493971810079,
+            "recall": 0.125,
+            "mrr": 0.5,
+            "latencyMs": 667.1509579999984
+          }
+        }
+      },
+      {
+        "query": "open source business model",
+        "relevantCount": 12,
+        "recallCeiling": 0.4166666666666667,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5118661886234599,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 6.537125000002561
+          },
+          "dense": {
+            "ndcg": 0.751574110798291,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 527.2858340000021
+          },
+          "fused": {
+            "ndcg": 0.6252864130293223,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 542.765333000003
+          },
+          "fused-rerank": {
+            "ndcg": 0.5835315657253425,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 697.8352919999961
+          },
+          "dense-rerank": {
+            "ndcg": 0.5538625330677265,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 733.7635840000003
+          }
+        }
+      },
+      {
+        "query": "typescript type system tricks",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07307367417534505,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.575041999996756
+          },
+          "dense": {
+            "ndcg": 0.6615613787411281,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 517.2794579999972
+          },
+          "fused": {
+            "ndcg": 0.4209031750477876,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 548.1428340000057
+          },
+          "fused-rerank": {
+            "ndcg": 0.5268078441704505,
+            "recall": 0,
+            "mrr": 0.1111111111111111,
+            "latencyMs": 811.6225830000039
+          },
+          "dense-rerank": {
+            "ndcg": 0.6609549324729168,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 668.0377499999959
+          }
+        }
+      },
+      {
+        "query": "database index design",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.302457999998296
+          },
+          "dense": {
+            "ndcg": 0.9260446319296772,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 623.0491249999977
+          },
+          "fused": {
+            "ndcg": 0.8391657063511034,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 539.2832500000004
+          },
+          "fused-rerank": {
+            "ndcg": 0.8466910790763054,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 709.1137919999965
+          },
+          "dense-rerank": {
+            "ndcg": 0.8466910790763054,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 622.1204170000055
+          }
+        }
+      },
+      {
+        "query": "react server components",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.04434774260160817,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.635792000000947
+          },
+          "dense": {
+            "ndcg": 0.43204785429873127,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 520.1030419999952
+          },
+          "fused": {
+            "ndcg": 0.3325374698680232,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 564.6267920000028
+          },
+          "fused-rerank": {
+            "ndcg": 0.4120691123921037,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 657.4196670000019
+          },
+          "dense-rerank": {
+            "ndcg": 0.41014864921468747,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 663.3019159999967
+          }
+        }
+      },
+      {
+        "query": "why do startups fail at scale",
+        "relevantCount": 13,
+        "recallCeiling": 0.38461538461538464,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.1343077246888793,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 5.54912499999773
+          },
+          "dense": {
+            "ndcg": 0.495892029658403,
+            "recall": 0.15384615384615385,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 525.9580419999984
+          },
+          "fused": {
+            "ndcg": 0.4724898796428127,
+            "recall": 0.23076923076923078,
+            "mrr": 0.5,
+            "latencyMs": 527.7463750000024
+          },
+          "fused-rerank": {
+            "ndcg": 0.4774402482142253,
+            "recall": 0.23076923076923078,
+            "mrr": 1,
+            "latencyMs": 695.4861669999955
+          },
+          "dense-rerank": {
+            "ndcg": 0.46905689485382923,
+            "recall": 0.23076923076923078,
+            "mrr": 1,
+            "latencyMs": 686.8625410000095
+          }
+        }
+      },
+      {
+        "query": "how does garbage collection work",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 6.985167000006186
+          },
+          "dense": {
+            "ndcg": 0.6575279073696869,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 442.4034580000007
+          },
+          "fused": {
+            "ndcg": 0.5684531923030289,
+            "recall": 1,
+            "mrr": 0.25,
+            "latencyMs": 507.78241700000945
+          },
+          "fused-rerank": {
+            "ndcg": 0.634160219686138,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 727.2595410000067
+          },
+          "dense-rerank": {
+            "ndcg": 0.634160219686138,
+            "recall": 1,
+            "mrr": 0.5,
+            "latencyMs": 616.4000419999938
+          }
+        }
+      },
+      {
+        "query": "why is software estimation so hard",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.07242488707933796,
+            "recall": 0,
+            "mrr": 0.14285714285714285,
+            "latencyMs": 4.371666999999434
+          },
+          "dense": {
+            "ndcg": 0.2136501735611006,
+            "recall": 0.09090909090909091,
+            "mrr": 0.25,
+            "latencyMs": 547.6063339999964
+          },
+          "fused": {
+            "ndcg": 0.13413642197015335,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 530.494458000001
+          },
+          "fused-rerank": {
+            "ndcg": 0.2690841736674746,
+            "recall": 0.18181818181818182,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 675.2729169999948
+          },
+          "dense-rerank": {
+            "ndcg": 0.33451024811741975,
+            "recall": 0.18181818181818182,
+            "mrr": 0.5,
+            "latencyMs": 680.8994999999995
+          }
+        }
+      },
+      {
+        "query": "when should you use microservices",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 5.7268329999933485
+          },
+          "dense": {
+            "ndcg": 0.5338638927306175,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 558.3754580000095
+          },
+          "fused": {
+            "ndcg": 0.3047813445164083,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 533.2685420000053
+          },
+          "fused-rerank": {
+            "ndcg": 0.48306700197788277,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 851.6538329999894
+          },
+          "dense-rerank": {
+            "ndcg": 0.5296128949867626,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 623.4438329999975
+          }
+        }
+      },
+      {
+        "query": "why do programmers prefer Linux",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.33292682443469007,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 3.7413329999981215
+          },
+          "dense": {
+            "ndcg": 0.586528117628651,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 508.8372919999965
+          },
+          "fused": {
+            "ndcg": 0.4759055381069723,
+            "recall": 0.16666666666666666,
+            "mrr": 1,
+            "latencyMs": 546.7046249999985
+          },
+          "fused-rerank": {
+            "ndcg": 0.3527175689944208,
+            "recall": 0.3333333333333333,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 719.4815420000086
+          },
+          "dense-rerank": {
+            "ndcg": 0.45785724914146714,
+            "recall": 0.16666666666666666,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 841.793417000008
+          }
+        }
+      },
+      {
+        "query": "how do you handle distributed transactions",
+        "relevantCount": 1,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.2969579999917187
+          },
+          "dense": {
+            "ndcg": 0.8903894887369824,
+            "recall": 1,
+            "mrr": 1,
+            "latencyMs": 671.3790410000074
+          },
+          "fused": {
+            "ndcg": 0.5370089132348235,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 572.8364580000052
+          },
+          "fused-rerank": {
+            "ndcg": 0.6119528921531397,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 700.9412500000035
+          },
+          "dense-rerank": {
+            "ndcg": 0.6119528921531397,
+            "recall": 1,
+            "mrr": 0.2,
+            "latencyMs": 685.4511660000135
+          }
+        }
+      },
+      {
+        "query": "why is hiring senior engineers difficult",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.09433571616937413,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.1333749999903375
+          },
+          "dense": {
+            "ndcg": 0.3520767664167051,
+            "recall": 0.16666666666666666,
+            "mrr": 0.5,
+            "latencyMs": 637.0665830000071
+          },
+          "fused": {
+            "ndcg": 0.08422371036225003,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 571.6016660000023
+          },
+          "fused-rerank": {
+            "ndcg": 0.13055057065785697,
+            "recall": 0,
+            "mrr": 0.125,
+            "latencyMs": 613.7414590000117
+          },
+          "dense-rerank": {
+            "ndcg": 0.2837655906220106,
+            "recall": 0,
+            "mrr": 0.16666666666666666,
+            "latencyMs": 661.9396249999991
+          }
+        }
+      },
+      {
+        "query": "what makes a good code review",
+        "relevantCount": 6,
+        "recallCeiling": 0.8333333333333334,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.4711266152428237,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 5.813125000000582
+          },
+          "dense": {
+            "ndcg": 0.8125803249542112,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 551.4451249999984
+          },
+          "fused": {
+            "ndcg": 0.5532458034219105,
+            "recall": 0.3333333333333333,
+            "mrr": 1,
+            "latencyMs": 552.770875000002
+          },
+          "fused-rerank": {
+            "ndcg": 0.7198264484266397,
+            "recall": 0.6666666666666666,
+            "mrr": 1,
+            "latencyMs": 692.0637920000008
+          },
+          "dense-rerank": {
+            "ndcg": 0.7190333763153811,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 672.4552909999911
+          }
+        }
+      },
+      {
+        "query": "technical debt as career risk",
+        "relevantCount": 5,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.10701743917785497,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 3.70808300000499
+          },
+          "dense": {
+            "ndcg": 0.397441634563817,
+            "recall": 0.2,
+            "mrr": 0.2,
+            "latencyMs": 575.9330840000039
+          },
+          "fused": {
+            "ndcg": 0.3474930046735553,
+            "recall": 0.2,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 556.1811250000028
+          },
+          "fused-rerank": {
+            "ndcg": 0.3420676488877998,
+            "recall": 0.2,
+            "mrr": 0.25,
+            "latencyMs": 714.9558329999854
+          },
+          "dense-rerank": {
+            "ndcg": 0.3420676488877998,
+            "recall": 0.2,
+            "mrr": 0.25,
+            "latencyMs": 689.2667080000101
+          }
+        }
+      },
+      {
+        "query": "the cost of software abstractions",
+        "relevantCount": 11,
+        "recallCeiling": 0.45454545454545453,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.26970622818303025,
+            "recall": 0.18181818181818182,
+            "mrr": 0.5,
+            "latencyMs": 5.591875000012806
+          },
+          "dense": {
+            "ndcg": 0.48028266523906366,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 651.4895830000169
+          },
+          "fused": {
+            "ndcg": 0.34631145536834074,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 533.0789579999982
+          },
+          "fused-rerank": {
+            "ndcg": 0.16482718830820842,
+            "recall": 0.18181818181818182,
+            "mrr": 0.25,
+            "latencyMs": 777.4937919999938
+          },
+          "dense-rerank": {
+            "ndcg": 0.2490291212131991,
+            "recall": 0.18181818181818182,
+            "mrr": 0.3333333333333333,
+            "latencyMs": 719.8539170000004
+          }
+        }
+      },
+      {
+        "query": "engineering culture and productivity",
+        "relevantCount": 31,
+        "recallCeiling": 0.16129032258064516,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.5081903824276001,
+            "recall": 0.0967741935483871,
+            "mrr": 0.5,
+            "latencyMs": 4.086249999993015
+          },
+          "dense": {
+            "ndcg": 0.8577666702728031,
+            "recall": 0.16129032258064516,
+            "mrr": 1,
+            "latencyMs": 589.1650419999787
+          },
+          "fused": {
+            "ndcg": 0.8305658395084461,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 595.8166670000064
+          },
+          "fused-rerank": {
+            "ndcg": 0.5663074998581882,
+            "recall": 0.12903225806451613,
+            "mrr": 1,
+            "latencyMs": 667.4519999999902
+          },
+          "dense-rerank": {
+            "ndcg": 0.748466552802194,
+            "recall": 0.16129032258064516,
+            "mrr": 1,
+            "latencyMs": 679.8414170000178
+          }
+        }
+      },
+      {
+        "query": "complexity as the root of all software problems",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.48675331299064106,
+            "recall": 0.07407407407407407,
+            "mrr": 1,
+            "latencyMs": 6.5858749999897555
+          },
+          "dense": {
+            "ndcg": 0.8537662720095992,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 549.4905000000144
+          },
+          "fused": {
+            "ndcg": 0.6566361284727589,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 442.2888329999987
+          },
+          "fused-rerank": {
+            "ndcg": 0.7281793842536286,
+            "recall": 0.14814814814814814,
+            "mrr": 1,
+            "latencyMs": 757.3274589999928
+          },
+          "dense-rerank": {
+            "ndcg": 0.8555194130370415,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 701.4417909999902
+          }
+        }
+      },
+      {
+        "query": "open source sustainability",
+        "relevantCount": 22,
+        "recallCeiling": 0.22727272727272727,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.37599810959488245,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 5.752500000002328
+          },
+          "dense": {
+            "ndcg": 0.6281299104392378,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 498.30120899999747
+          },
+          "fused": {
+            "ndcg": 0.6631272753284257,
+            "recall": 0.13636363636363635,
+            "mrr": 1,
+            "latencyMs": 539.13162499998
+          },
+          "fused-rerank": {
+            "ndcg": 0.6061073118080311,
+            "recall": 0.22727272727272727,
+            "mrr": 1,
+            "latencyMs": 747.5868750000081
+          },
+          "dense-rerank": {
+            "ndcg": 0.6511284524781192,
+            "recall": 0.18181818181818182,
+            "mrr": 1,
+            "latencyMs": 681.368124999979
+          }
+        }
+      },
+      {
+        "query": "AI replacing software developers",
+        "relevantCount": 27,
+        "recallCeiling": 0.18518518518518517,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.27893543971052465,
+            "recall": 0.037037037037037035,
+            "mrr": 0.2,
+            "latencyMs": 5.225500000000466
+          },
+          "dense": {
+            "ndcg": 0.8113499146016456,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 478.9482910000079
+          },
+          "fused": {
+            "ndcg": 0.64268059475173,
+            "recall": 0.14814814814814814,
+            "mrr": 0.5,
+            "latencyMs": 509.72912499998347
+          },
+          "fused-rerank": {
+            "ndcg": 0.8850925664646847,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 614.0011670000094
+          },
+          "dense-rerank": {
+            "ndcg": 0.9155260051911699,
+            "recall": 0.18518518518518517,
+            "mrr": 1,
+            "latencyMs": 648.7697909999988
+          }
+        }
+      },
+      {
+        "query": "remote work and software teams",
+        "relevantCount": 8,
+        "recallCeiling": 0.625,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.20262822952728438,
+            "recall": 0.125,
+            "mrr": 1,
+            "latencyMs": 5.3752499999827705
+          },
+          "dense": {
+            "ndcg": 0.3479168239402767,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 537.4329159999907
+          },
+          "fused": {
+            "ndcg": 0.24299089934828338,
+            "recall": 0.25,
+            "mrr": 0.5,
+            "latencyMs": 440.0674579999759
+          },
+          "fused-rerank": {
+            "ndcg": 0.33713752659288415,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 768.4832079999906
+          },
+          "dense-rerank": {
+            "ndcg": 0.3886078708918771,
+            "recall": 0.25,
+            "mrr": 1,
+            "latencyMs": 671.3025000000198
+          }
+        }
+      },
+      {
+        "query": "rewriting versus refactoring legacy systems",
+        "relevantCount": 10,
+        "recallCeiling": 0.5,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0.12927277175929244,
+            "recall": 0.1,
+            "mrr": 0.25,
+            "latencyMs": 6.716917000012472
+          },
+          "dense": {
+            "ndcg": 0.47353135092811804,
+            "recall": 0.3,
+            "mrr": 1,
+            "latencyMs": 517.7828750000044
+          },
+          "fused": {
+            "ndcg": 0.38741304858474734,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 514.3744999999763
+          },
+          "fused-rerank": {
+            "ndcg": 0.40181497177857833,
+            "recall": 0.3,
+            "mrr": 0.5,
+            "latencyMs": 723.5624580000003
+          },
+          "dense-rerank": {
+            "ndcg": 0.42632245979603656,
+            "recall": 0.2,
+            "mrr": 1,
+            "latencyMs": 792.093125000014
+          }
+        }
+      },
+      {
+        "query": "what is V8 hidden classes",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.614665999979479
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 583.9658340000024
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 945.378457999992
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 881.7427089999837
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 708.2062499999884
+          }
+        }
+      },
+      {
+        "query": "how does consistent hashing work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.018375000014203
+          },
+          "dense": {
+            "ndcg": 0.3010299956639812,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 528.6022919999959
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 614.6196669999918
+          },
+          "fused-rerank": {
+            "ndcg": 0.5,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 804.8152910000063
+          },
+          "dense-rerank": {
+            "ndcg": 0.6309297535714575,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 687.4579580000136
+          }
+        }
+      },
+      {
+        "query": "what is the CAP theorem",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 2.8533339999848977
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 535.401125000004
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 592.2683749999851
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 683.7011249999923
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 862.5120840000163
+          }
+        }
+      },
+      {
+        "query": "how does Raft consensus work",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 4.916999999986729
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 542.3238750000019
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 546.1195000000007
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 762.447125000006
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 649.7575830000278
+          }
+        }
+      },
+      {
+        "query": "what is copy-on-write in Linux",
+        "relevantCount": 0,
+        "recallCeiling": null,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 3.78620800000499
+          },
+          "dense": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 631.4260420000064
+          },
+          "fused": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 544.7286250000179
+          },
+          "fused-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 1033.1040000000212
+          },
+          "dense-rerank": {
+            "ndcg": 0,
+            "recall": null,
+            "mrr": null,
+            "latencyMs": 636.3530840000021
+          }
+        }
+      },
+      {
+        "query": "how does TLS handshake work",
+        "relevantCount": 2,
+        "recallCeiling": 1,
+        "byMode": {
+          "bm25": {
+            "ndcg": 0,
+            "recall": 0,
+            "mrr": 0,
+            "latencyMs": 4.706124999996973
+          },
+          "dense": {
+            "ndcg": 0.6671714049117464,
+            "recall": 0.5,
+            "mrr": 0.5,
+            "latencyMs": 661.0803749999905
+          },
+          "fused": {
+            "ndcg": 0.5574480986113458,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 492.35437499999534
+          },
+          "fused-rerank": {
+            "ndcg": 0.5844153148080933,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 566.4175410000025
+          },
+          "dense-rerank": {
+            "ndcg": 0.6084861310735535,
+            "recall": 0.5,
+            "mrr": 1,
+            "latencyMs": 662.4251670000085
+          }
+        }
+      }
+    ],
+    "comparisons": {
+      "ndcg": {
+        "bm25_vs_dense": {
+          "meanDifference": -0.3389460086087814,
+          "low": -0.42288040017097384,
+          "high": -0.2582190415237796,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 30
+        },
+        "bm25_vs_fused": {
+          "meanDifference": -0.22091066798504574,
+          "low": -0.2963700242170412,
+          "high": -0.15008423527689221,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 30
+        },
+        "bm25_vs_fusedRerank": {
+          "meanDifference": -0.2779030793852671,
+          "low": -0.3635635445147452,
+          "high": -0.1948995845692664,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 30
+        },
+        "bm25_vs_denseRerank": {
+          "meanDifference": -0.31416812919211445,
+          "low": -0.3988508671744081,
+          "high": -0.2301068821244424,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 30
+        },
+        "dense_vs_fused": {
+          "meanDifference": 0.11803534062373565,
+          "low": 0.08433832427831603,
+          "high": 0.15267077487045733,
+          "pPositive": 1,
+          "pValue": 0,
+          "significant": true,
+          "n": 30
+        },
+        "dense_vs_fusedRerank": {
+          "meanDifference": 0.06104292922351429,
+          "low": 0.01579698512954791,
+          "high": 0.10686798750658183,
+          "pPositive": 0.9958,
+          "pValue": 0.008399999999999963,
+          "significant": true,
+          "n": 30
+        },
+        "dense_vs_denseRerank": {
+          "meanDifference": 0.02477787941666693,
+          "low": -0.019985964172815805,
+          "high": 0.06795483172282836,
+          "pPositive": 0.8636,
+          "pValue": 0.27279999999999993,
+          "significant": false,
+          "n": 30
+        },
+        "fused_vs_fusedRerank": {
+          "meanDifference": -0.05699241140022138,
+          "low": -0.1108834759297363,
+          "high": -0.005315948990078761,
+          "pPositive": 0.0143,
+          "pValue": 0.0286,
+          "significant": true,
+          "n": 30
+        },
+        "fused_vs_denseRerank": {
+          "meanDifference": -0.09325746120706874,
+          "low": -0.15286498312145025,
+          "high": -0.039905019076441645,
+          "pPositive": 0.0004,
+          "pValue": 0.0008,
+          "significant": true,
+          "n": 30
+        },
+        "fusedRerank_vs_denseRerank": {
+          "meanDifference": -0.03626504980684737,
+          "low": -0.05810089367805658,
+          "high": -0.014820592206981535,
+          "pPositive": 0.0002,
+          "pValue": 0.0004,
+          "significant": true,
+          "n": 30
+        }
+      },
+      "recall": {
+        "bm25_vs_dense": {
+          "meanDifference": -0.20929240885558087,
+          "low": -0.3518464212012599,
+          "high": -0.08850467035950906,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_fused": {
+          "meanDifference": -0.21400137472046074,
+          "low": -0.358179012345679,
+          "high": -0.08841644839628711,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_fusedRerank": {
+          "meanDifference": -0.2703109987384181,
+          "low": -0.4028095958203486,
+          "high": -0.15324016634500506,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_denseRerank": {
+          "meanDifference": -0.24491546635363837,
+          "low": -0.3830697466114133,
+          "high": -0.12530563945214485,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "dense_vs_fused": {
+          "meanDifference": -0.004708965864879844,
+          "low": -0.056142657621152246,
+          "high": 0.031341189674523005,
+          "pPositive": 0.4552,
+          "pValue": 0.9104,
+          "significant": false,
+          "n": 24
+        },
+        "dense_vs_fusedRerank": {
+          "meanDifference": -0.06101858988283718,
+          "low": -0.12425321591988257,
+          "high": -0.006742405095899722,
+          "pPositive": 0.012,
+          "pValue": 0.024,
+          "significant": true,
+          "n": 24
+        },
+        "dense_vs_denseRerank": {
+          "meanDifference": -0.035623057498057505,
+          "low": -0.08848096348096347,
+          "high": 0.008049242424242419,
+          "pPositive": 0.0631,
+          "pValue": 0.1262,
+          "significant": false,
+          "n": 24
+        },
+        "fused_vs_fusedRerank": {
+          "meanDifference": -0.05630962401795734,
+          "low": -0.10473484848484847,
+          "high": -0.016694725028058358,
+          "pPositive": 0.0009,
+          "pValue": 0.0018,
+          "significant": true,
+          "n": 24
+        },
+        "fused_vs_denseRerank": {
+          "meanDifference": -0.030914091633177643,
+          "low": -0.059642346403099095,
+          "high": -0.0063244451685311905,
+          "pPositive": 0.004,
+          "pValue": 0.008,
+          "significant": true,
+          "n": 24
+        },
+        "fusedRerank_vs_denseRerank": {
+          "meanDifference": 0.025395532384779693,
+          "low": 0.0028225806451612893,
+          "high": 0.05277777777777776,
+          "pPositive": 0.9898,
+          "pValue": 0.020399999999999974,
+          "significant": true,
+          "n": 24
+        }
+      },
+      "mrr": {
+        "bm25_vs_dense": {
+          "meanDifference": -0.33002645502645506,
+          "low": -0.48495370370370366,
+          "high": -0.1801256613756614,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_fused": {
+          "meanDifference": -0.22089947089947093,
+          "low": -0.3746693121693121,
+          "high": -0.06564153439153439,
+          "pPositive": 0.0018,
+          "pValue": 0.0036,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_fusedRerank": {
+          "meanDifference": -0.31985780423280424,
+          "low": -0.4807374338624339,
+          "high": -0.16793981481481482,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "bm25_vs_denseRerank": {
+          "meanDifference": -0.3551587301587302,
+          "low": -0.512797619047619,
+          "high": -0.2026785714285714,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        },
+        "dense_vs_fused": {
+          "meanDifference": 0.10912698412698413,
+          "low": 0.0038690476190476213,
+          "high": 0.22139550264550265,
+          "pPositive": 0.9786,
+          "pValue": 0.04279999999999995,
+          "significant": true,
+          "n": 24
+        },
+        "dense_vs_fusedRerank": {
+          "meanDifference": 0.010168650793650785,
+          "low": -0.15047949735449737,
+          "high": 0.16914682539682543,
+          "pPositive": 0.5472,
+          "pValue": 0.9056,
+          "significant": false,
+          "n": 24
+        },
+        "dense_vs_denseRerank": {
+          "meanDifference": -0.025132275132275117,
+          "low": -0.1770833333333333,
+          "high": 0.12665343915343916,
+          "pPositive": 0.3661,
+          "pValue": 0.7322,
+          "significant": false,
+          "n": 24
+        },
+        "fused_vs_fusedRerank": {
+          "meanDifference": -0.09895833333333331,
+          "low": -0.24074074074074078,
+          "high": 0.05092592592592593,
+          "pPositive": 0.0919,
+          "pValue": 0.1838,
+          "significant": false,
+          "n": 24
+        },
+        "fused_vs_denseRerank": {
+          "meanDifference": -0.13425925925925927,
+          "low": -0.2662037037037037,
+          "high": 0.00462962962962965,
+          "pPositive": 0.0321,
+          "pValue": 0.0642,
+          "significant": false,
+          "n": 24
+        },
+        "fusedRerank_vs_denseRerank": {
+          "meanDifference": -0.03530092592592592,
+          "low": -0.08391203703703703,
+          "high": -0.004050925925925926,
+          "pPositive": 0,
+          "pValue": 0,
+          "significant": true,
+          "n": 24
+        }
+      }
+    },
+    "recallCeilingMean": 0.696637765858196,
+    "queriesWithNoRelevant": 6
   }
 ]
