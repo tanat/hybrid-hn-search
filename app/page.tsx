@@ -33,6 +33,7 @@ const MODES = [
   { id: 'dense', label: 'Dense' },
   { id: 'fused', label: 'Fused' },
   { id: 'fused-rerank', label: 'Fused+Rerank' },
+  { id: 'dense-rerank', label: 'Dense+Rerank' },
 ] as const;
 
 const COMPARE_MODES: Array<typeof MODES[number]['id']> = ['bm25', 'dense', 'fused-rerank'];

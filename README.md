@@ -2,41 +2,77 @@
 
 **[Live demo →](https://hybrid-hn-search.vercel.app)**
 
-Hybrid retrieval over a frozen Hacker News comment archive (4985 comments,
-last 12 months). Four modes — BM25, dense, RRF-fused, fused+reranker —
-running side-by-side. The artifact of value is the eval table, not the UI.
+Hybrid retrieval over a frozen Hacker News comment archive (4,985 comments,
+last 12 months). Five modes — BM25, dense, RRF-fused, fused+reranker,
+dense+reranker — running side-by-side. The artifact of value is the eval table,
+not the UI.
 
 > **Grading:** the numbers below are an **`llm:gemini` baseline** (1,670 graded
-> query–candidate pairs), not human gold — read them as a relative ranking of the
-> four modes, not absolute truth. Every eval row records `gradingProvenance` and a
-> `gradeCounts` breakdown, so the provenance is never hidden.
+> query–candidate pairs — the full candidate pool, nothing left unjudged), not
+> human gold. Read them as a relative ranking of the modes, not absolute truth.
+> Every eval row records `gradingProvenance` and a `gradeCounts` breakdown.
 
 ## Results
 
 | Mode             | nDCG@10   | Recall@5  | MRR       | p50 latency |
 | ---------------- | --------- | --------- | --------- | ----------- |
-| BM25 only        | 0.144     | 0.065     | 0.281     | 5 ms        |
-| Dense only       | **0.483** | 0.232     | **0.545** | 509 ms      |
-| RRF fused        | 0.365     | 0.236     | 0.458     | 533 ms      |
-| Fused + rerank   | 0.422     | **0.281** | 0.537     | 690 ms      |
+| BM25 only        | 0.144     | 0.081     | 0.351     | 9 ms        |
+| Dense only       | **0.483** | 0.290     | 0.681     | 567 ms      |
+| RRF fused        | 0.365     | 0.295     | 0.572     | 534 ms      |
+| Fused + rerank   | 0.422     | **0.351** | 0.671     | 933 ms      |
+| Dense + rerank   | 0.458     | 0.326     | **0.706** | 768 ms      |
 
-<sub>30 queries · 4,985-comment corpus · `text-embedding-3-small` · reranker `ms-marco-MiniLM-L-6-v2` · `llm:gemini` grades. Bold = best per column.</sub>
+<sub>30 queries · 4,985-comment corpus · `text-embedding-3-small` · reranker
+`ms-marco-MiniLM-L-6-v2` · `llm:gemini` grades. Bold = best per column.
+Recall@5 and MRR are over the 24 queries that have at least one relevant
+comment; recall@5 cannot exceed 5/|relevant|, which averages **0.697** here, so
+0.35 is roughly half of what was reachable.</sub>
 
-After grading, `pnpm eval` appends a row to
-[evals/results.json](./evals/results.json) and the table above gets
-the actual numbers. The dashboard at `/eval` renders the latest run
-with best-per-metric highlighted green and worst red.
+## Which differences are real
 
-**What the numbers actually say** — and it's not the textbook story. On this
-corpus (semantic, discussion-style HN comments) **pure dense retrieval wins on
-ranking quality** (nDCG@10 0.48, MRR 0.55). BM25 is weak (0.14): lexical overlap
-barely helps on paraphrased conversational text, so **RRF fusion _hurts_ nDCG** —
-the weak lexical signal drags the blend below dense alone. The **cross-encoder
-reranker earns its keep on recall@5** (0.23 → 0.28), pulling more relevant comments
-into the top-5 for +180 ms. The honest takeaway: "hybrid + rerank always wins" is a
-myth — on _this_ corpus the right stack is **dense + rerank**, and BM25 fusion is a
-net negative. (An `llm:gemini` baseline; a human-graded pass could move the
-absolutes, not the ordering.)
+A gap between two means over thirty queries is not a finding on its own, so
+every pair of modes is compared with a **paired bootstrap** — resample the
+queries, recompute the mean difference, report the interval. Paired because both
+modes see the same queries, and queries vary far more than modes do.
+
+| Comparison | nDCG@10 | recall@5 | MRR |
+| --- | --- | --- | --- |
+| dense − fused | **+0.118** [0.084, 0.153] | −0.005 *(ns, p=0.91)* | **+0.109** [0.004, 0.221] |
+| dense − fused+rerank | **+0.061** [0.016, 0.107] | **−0.061** [−0.124, −0.007] | +0.010 *(ns, p=0.91)* |
+| dense − dense+rerank | +0.025 *(ns, p=0.27)* | −0.036 *(ns, p=0.13)* | −0.025 *(ns, p=0.73)* |
+| fused+rerank − dense+rerank | **−0.036** [−0.058, −0.015] | **+0.025** [0.003, 0.053] | **−0.035** [−0.084, −0.004] |
+
+*(ns = the interval spans zero; the two modes are not distinguishable at n=30.)*
+
+## What the numbers actually say
+
+**The answer depends on which metric you are buying, and that is the finding.**
+
+**For ranking quality, plain dense wins and the textbook stack is a waste.** BM25
+is weak on this corpus (0.144) — lexical overlap barely helps on paraphrased,
+conversational text — and fusing it in **hurts nDCG by 0.118**, well outside the
+interval. That much of "hybrid + rerank always wins" is a myth here. But the
+correction goes further than this README used to admit: adding a cross-encoder on
+top of dense does **not** measurably improve ranking either (+0.025 nDCG,
+p=0.27; −0.025 MRR, p=0.73). You pay 200 ms for nothing you can detect.
+
+**For getting relevant comments into the top 5, the lexical leg earns its place
+back.** Fused+rerank is the only configuration that significantly beats dense on
+recall@5 (+0.061), and it beats dense+rerank too (+0.025) — the configuration
+containing the very BM25 signal that hurts nDCG. Fusion widens the candidate set;
+the reranker then sorts out the mess. So "BM25 fusion is a net negative" is true
+for ranking and false for recall, and stating it without the qualifier was
+overreach.
+
+**Earlier versions of this README recommended dense + rerank without having run
+it.** The eval measured four modes and inferred the fifth. `dense-rerank` is now
+a real mode, and the inference does not survive: it is indistinguishable from
+plain dense on both ranking metrics and worse than fused+rerank on recall.
+
+If you want one recommendation from this corpus: **dense alone if you rank,
+fused+rerank if you retrieve** — and note that both statements come from an
+LLM-graded baseline over thirty queries. A human-graded pass could move the
+absolutes; the paired intervals say which orderings would have to move with them.
 
 ## Try it
 

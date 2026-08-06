@@ -30,6 +30,7 @@ const MODE_LABELS: Record<string, string> = {
   dense: 'Dense',
   fused: 'RRF fused',
   fusedRerank: 'Fused + rerank',
+  denseRerank: 'Dense + rerank',
 };
 
 const METRIC_LABELS: Array<{
